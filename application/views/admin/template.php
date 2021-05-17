@@ -228,7 +228,7 @@
     <script src="<?= base_url('assets/')?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="<?= base_url('assets/')?>vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- <script src="<?= base_url('assets/')?>vendor/jquery-easing/jquery.easing.min.js"></script> -->
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('assets/')?>js/sb-admin-2.min.js"></script>
@@ -239,19 +239,24 @@
 
     <script>
     $(document).ready(function() {
-        $('.table').DataTable();
+        let id = 0;
+        $("#btnAdd").click(function() {
+            id++;
+            $(".inputAdd").append(
+                '<div class="input-group mb-3" id="unit-' + id +
+                '"><input type="text" class="form-control" name="unit[]"><div class="input-group-append"><button class="btn btn-primary" onclick="adel(' +
+                id + ')" type="button"><i class="fa fa-minus" id="adel"></i></button></div></div>'
+            );
+        });
     });
+
+    function adel(id) {
+        $("#unit-" + id).remove();
+    }
     </script>
     <script>
     $(document).ready(function() {
-        $("#btnAdd").click(function() {
-            $(".inputAdd").append(
-                '<div class="input-group mb-3" id="delete"><input type="text" class="form-control" name="unit[]"><div class="input-group-append"><button class="btn btn-primary" type="button"><i class="fa fa-minus" id=""></i></button></div></div>'
-            );
-        });
-        $("#btnRemove").click(function() {
-            $("#delete").remove();
-        });
+        $('.table').DataTable();
     });
     </script>
 

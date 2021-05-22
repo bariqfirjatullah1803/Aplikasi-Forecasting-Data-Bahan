@@ -39,7 +39,7 @@ class Transaksi extends CI_Controller {
                 'nama_pembeli' => $nama_pembeli,
                 'unit' => $u,
                 'id_plan' => $plan,
-                'harga' => $harga,
+                'biaya' => $harga,
                 'id_rumah' => $rumah,
                 'date_created' => date("Y-m-d",time())
 

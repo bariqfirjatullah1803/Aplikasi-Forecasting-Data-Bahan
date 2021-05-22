@@ -79,7 +79,7 @@
                             echo '<td>'.$no.'</td>';
                             echo '<td>'.$t['nama_pembeli'].'</td>';
                             echo '<td>'.$t['unit'].'</td>';
-                            echo '<td>'.$t['harga'].'</td>';
+                            echo '<td>'.$t['biaya'].'</td>';
                             echo '<td>'.$t['date_created'].'</td>';
                             echo '</tr>';
                             $no++;

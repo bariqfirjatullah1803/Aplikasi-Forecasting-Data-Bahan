@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 17/05/2021 11:16:28
+ Date: 23/05/2021 19:52:34
 */
 
 SET NAMES utf8mb4;
@@ -222,10 +222,24 @@ CREATE TABLE `tb_transaksi`  (
   `nama_pembeli` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `id_plan` int(11) NULL DEFAULT NULL,
-  `harga` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `biaya` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `id_rumah` int(11) NULL DEFAULT NULL,
-  `date_created` date NULL DEFAULT NULL
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `date_created` date NULL DEFAULT NULL,
+  `date_end` date NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_transaksi
+-- ----------------------------
+INSERT INTO `tb_transaksi` VALUES (1621769472, 'Juhriatul Wakhdiyah', '24', 1, '118000000', 3, NULL, '2018-12-15', NULL);
+INSERT INTO `tb_transaksi` VALUES (1621769472, 'Juhriatul Wakhdiyah', '25', 1, '118000000', 3, NULL, '2018-12-15', NULL);
+INSERT INTO `tb_transaksi` VALUES (1621769631, 'Ning Wasiati', '5', 1, '80000000', 2, NULL, '2019-03-11', NULL);
+INSERT INTO `tb_transaksi` VALUES (1621769695, 'Mujianto', '34', 1, '120000000', 3, NULL, '2019-05-04', NULL);
+INSERT INTO `tb_transaksi` VALUES (1621769695, 'Mujianto', '35', 1, '120000000', 3, NULL, '2019-05-04', NULL);
+INSERT INTO `tb_transaksi` VALUES (1621769734, 'Pralis Suyono', '3', 1, '85000000', 1, NULL, '2019-06-01', NULL);
+INSERT INTO `tb_transaksi` VALUES (1621769869, 'Asmad', '1,2', 1, '88000000', 1, NULL, '2020-02-15', NULL);
+INSERT INTO `tb_transaksi` VALUES (1621769918, 'Samsul Arifin', '16,17,18', 1, '180000000', 2, NULL, '2020-09-01', NULL);
 
 -- ----------------------------
 -- Table structure for tb_unit

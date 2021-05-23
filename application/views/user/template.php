@@ -2,201 +2,360 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title><?= $title;?></title>
+    <title>EstateAgency Bootstrap Template - <?= $title; ?></title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-    <!-- Custom fonts for this template-->
-    <link href="<?= base_url('assets/')?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <!-- Favicons -->
+    <link href="<?= base_url('vendor') ?>/img/favicon.png" rel="icon">
+    <link href="<?= base_url('vendor') ?>/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Custom styles for this template-->
-    <link href="<?= base_url('assets/')?>css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 
-    <!-- Datatables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <!-- Vendor CSS Files -->
+    <link href="<?= base_url('vendor') ?>/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="<?= base_url('vendor') ?>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url('vendor') ?>/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="<?= base_url('vendor') ?>/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+    <!-- Template Main CSS File -->
+    <link href="<?= base_url('vendor') ?>/css/style.css" rel="stylesheet">
 
-
-
+    <!-- =======================================================
+  * Template Name: EstateAgency - v4.2.0
+  * Template URL: https://bootstrapmade.com/real-estate-agency-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
-<body id="page-top">
+<body>
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('home')?>">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-building"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">PT Taniya</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('home')?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Menu
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item <?php if($title == 'Site Plan'){echo 'active';}?>">
-                <a class="nav-link" href="<?= base_url('siteplan')?>">
-                    <i class="fas fa-fw fa-map"></i>
-                    <span>Site Plan</span>
-                </a>
-            </li>
-            <li class="nav-item <?php if($title == 'Data Rumah'){echo 'active';}?>">
-                <a class="nav-link" href="<?= base_url('rumah')?>">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Data Rumah</span>
-                </a>
-            </li>
-            <li class="nav-item <?php if($title == 'Data Anggaran'){echo 'active';}?>">
-                <a class="nav-link" href="<?= base_url('anggaran')?>">
-                    <i class="fas fa-fw fa-list"></i>
-                    <span>Data Anggaran</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Transaksi
-            </div>
-            <li class="nav-item <?php if($title == 'Pembayaran'){echo 'active';}?>">
-                <a class="nav-link" href="<?= base_url('transaksi')?>">
-                    <i class="fas fa-fw fa-money-check"></i>
-                    <span>Pembayaran</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                   
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                   
-                    <?= $contents ?>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+    <!-- ======= Property Search Section ======= -->
+    <div class="click-closed"></div>
+    <!--/ Form Search Star /-->
+    <div class="box-collapse">
+        <div class="title-box-d">
+            <h3 class="title-d">Search Property</h3>
+        </div>
+        <span class="close-box-collapse right-boxed bi bi-x"></span>
+        <div class="box-collapse-wrap form">
+            <form class="form-a">
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group">
+                            <label class="pb-2" for="Type">Keyword</label>
+                            <input type="text" class="form-control form-control-lg form-control-a"
+                                placeholder="Keyword">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="Type">Type</label>
+                            <select class="form-control form-select form-control-a" id="Type">
+                                <option>All Type</option>
+                                <option>For Rent</option>
+                                <option>For Sale</option>
+                                <option>Open House</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="city">City</label>
+                            <select class="form-control form-select form-control-a" id="city">
+                                <option>All City</option>
+                                <option>Alabama</option>
+                                <option>Arizona</option>
+                                <option>California</option>
+                                <option>Colorado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="bedrooms">Bedrooms</label>
+                            <select class="form-control form-select form-control-a" id="bedrooms">
+                                <option>Any</option>
+                                <option>01</option>
+                                <option>02</option>
+                                <option>03</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="garages">Garages</label>
+                            <select class="form-control form-select form-control-a" id="garages">
+                                <option>Any</option>
+                                <option>01</option>
+                                <option>02</option>
+                                <option>03</option>
+                                <option>04</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="bathrooms">Bathrooms</label>
+                            <select class="form-control form-select form-control-a" id="bathrooms">
+                                <option>Any</option>
+                                <option>01</option>
+                                <option>02</option>
+                                <option>03</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="price">Min Price</label>
+                            <select class="form-control form-select form-control-a" id="price">
+                                <option>Unlimite</option>
+                                <option>$50,000</option>
+                                <option>$100,000</option>
+                                <option>$150,000</option>
+                                <option>$200,000</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-b">Search Property</button>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+            </form>
+        </div>
+    </div><!-- End Property Search Section -->>
+
+    <!-- ======= Header/Navbar ======= -->
+    <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+        <div class="container">
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a class="navbar-brand text-brand" href="<?= base_url('user')?>">Estate<span class="color-b">Agency</span></a>
+
+            <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="<?= base_url('user')?>">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="<?= base_url('user/about')?>">About</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="<?= base_url('user/')?>property_grid">Property</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="<?= base_url('user/')?>blog_grid">Blog</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item " href="<?= base_url('user/')?>property_single">Property Single</a>
+                            <a class="dropdown-item " href="<?= base_url('user/')?>blog_single">Blog Single</a>
+                            <a class="dropdown-item " href="<?= base_url('user/')?>agents_grid">Agents Grid</a>
+                            <a class="dropdown-item " href="<?= base_url('user/')?>agent_single">Agent Single</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="<?= base_url('user/')?>contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
+                data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
+                <i class="bi bi-search"></i>
+            </button>
 
         </div>
-        <!-- End of Content Wrapper -->
+    </nav><!-- End Header/Navbar -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+    <?= $contents; ?>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <!-- ======= Footer ======= -->
+    <section class="section-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <div class="widget-a">
+                        <div class="w-header-a">
+                            <h3 class="w-title-a text-brand">EstateAgency</h3>
+                        </div>
+                        <div class="w-body-a">
+                            <p class="w-text-a color-text-a">
+                                Enim minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip exea commodo
+                                consequat duis
+                                sed aute irure.
+                            </p>
+                        </div>
+                        <div class="w-footer-a">
+                            <ul class="list-unstyled">
+                                <li class="color-a">
+                                    <span class="color-text-a">Phone .</span> contact@example.com
+                                </li>
+                                <li class="color-a">
+                                    <span class="color-text-a">Email .</span> +54 356 945234
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 section-md-t3">
+                    <div class="widget-a">
+                        <div class="w-header-a">
+                            <h3 class="w-title-a text-brand">The Company</h3>
+                        </div>
+                        <div class="w-body-a">
+                            <div class="w-body-a">
+                                <ul class="list-unstyled">
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i> <a href="#">Site Map</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i> <a href="#">Legal</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i> <a href="#">Agent Admin</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i> <a href="#">Careers</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i> <a href="#">Affiliate</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i> <a href="#">Privacy Policy</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 section-md-t3">
+                    <div class="widget-a">
+                        <div class="w-header-a">
+                            <h3 class="w-title-a text-brand">International sites</h3>
+                        </div>
+                        <div class="w-body-a">
+                            <ul class="list-unstyled">
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i> <a href="#">Venezuela</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i> <a href="#">China</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i> <a href="#">Hong Kong</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i> <a href="#">Argentina</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i> <a href="#">Singapore</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i> <a href="#">Philippines</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="nav-footer">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#">Home</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">About</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Property</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Blog</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="socials-a">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="bi bi-facebook" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="bi bi-twitter" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="bi bi-instagram" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="copyright-footer">
+                        <p class="copyright color-text-a">
+                            &copy; Copyright
+                            <span class="color-a">EstateAgency</span> All Rights Reserved.
+                        </p>
+                    </div>
+                    <div class="credits">
+                        <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=EstateAgency
+          -->
+                        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer><!-- End  Footer -->
 
-  
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="<?= base_url('assets/')?>vendor/jquery/jquery.min.js"></script>
-    <script src="<?= base_url('assets/')?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="<?= base_url('vendor') ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url('vendor') ?>/vendor/php-email-form/validate.js"></script>
+    <script src="<?= base_url('vendor') ?>/vendor/swiper/swiper-bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <!-- <script src="<?= base_url('assets/')?>vendor/jquery-easing/jquery.easing.min.js"></script> -->
-
-    <!-- Custom scripts for all pages-->
-    <script src="<?= base_url('assets/')?>js/sb-admin-2.min.js"></script>
-
-    <!-- Datatables -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
-    </script>
-
-    <script>
-    $(document).ready(function() {
-        let id = 0;
-        $("#btnAdd").click(function() {
-            id++;
-            $(".inputAdd").append(
-                '<div class="input-group mb-3" id="unit-' + id +
-                '"><input type="text" class="form-control" name="unit[]"><div class="input-group-append"><button class="btn btn-primary" onclick="adel(' +
-                id + ')" type="button"><i class="fa fa-minus" id="adel"></i></button></div></div>'
-            );
-        });
-    });
-
-    function adel(id) {
-        $("#unit-" + id).remove();
-    }
-    </script>
-    <script>
-    $(document).ready(function() {
-        $('.table').DataTable();
-    });
-    </script>
-
+    <!-- Template Main JS File -->
+    <script src="<?= base_url('vendor') ?>/js/main.js"></script>
 
 </body>
 

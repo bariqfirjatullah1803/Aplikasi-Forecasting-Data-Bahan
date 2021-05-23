@@ -14,7 +14,7 @@ class Admin extends CI_Controller {
         $this->load->model('model_user');
         $this->load->model('model_admin');
         
-    }
+    } 
     
 
     public function index()

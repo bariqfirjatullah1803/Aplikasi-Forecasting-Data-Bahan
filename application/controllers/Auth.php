@@ -34,6 +34,7 @@ class Auth extends CI_Controller {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
+        // Cocok database
         $user = $this->db->get_where('tb_user', ['username' => $username])->row_array();
 
         // jika usernya ada

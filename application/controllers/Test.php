@@ -7,7 +7,7 @@ class Test extends CI_Controller {
     public function index()
     {
         $a = 1424036;
-        $adate = strtotime('2021-05-19');
+        $adate = strtotime('2021-05-27');
         $year = date('Y',$adate);
         $month = date('m',$adate);
         $date = date('d',$adate);
@@ -20,7 +20,7 @@ class Test extends CI_Controller {
         //     echo date('Y-m-d',$weeks).'<br>';
 
         // } 
-        echo $enddate;
+        echo date("Y-m-d",strtotime("+10 Weeks",$adate));
 
     }
 

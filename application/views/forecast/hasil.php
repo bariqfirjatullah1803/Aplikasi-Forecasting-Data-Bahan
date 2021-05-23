@@ -1,6 +1,7 @@
 <?php
+
    
-    $qtahunawal = $this->db->query("SELECT YEAR(MIN(date_created)) AS tahunawal FROM tb_transaksi")->row_array();
+    $qtahunawal = $this->db->query("SELECT MIN(date_created) AS tahunawal FROM tb_transaksi")->row_array();
     $qtahunakhir = $this->db->query("SELECT MAX(date_created) AS tahunakhir FROM tb_transaksi")->row_array();
     $tahunawal = date("Y",strtotime($qtahunawal['tahunawal']));
     $tahunakhir = date("Y",strtotime("+10 Weeks",strtotime($qtahunakhir['tahunakhir'])));
@@ -14,7 +15,13 @@
         }
     }
     // $data3=array_combine($month,$year);
-    print_r($th);
+    // print_r($th);
+    if($ft){
+
+        $ft;
+    }else{
+        $ft = $tahunawal;
+    }
 ?>
 
 <?php 
@@ -26,20 +33,32 @@ $tj=0; $no=1; foreach($transaksi as $t){
         $mm = intval(date('m',$weeks));
         $yy = intval(date('Y',$weeks));
         $totalbulanan =  intval($t['total']);
-        $month[$mm] += $totalbulanan;
+        // $month[$mm] += $totalbulanan;
         $th[$yy][$mm] += $totalbulanan;
         $no++; 
     }  
 }
 ?>
-<div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-        <?php foreach($tahun as $tahunaja):?>
-            <option><?= $tahunaja?></option>
-        <?php endforeach?>
-    </select>
-</div>
+<form action="<?= base_url('forecast')?>" method="post">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group row">
+                <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
+                <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
+                    <?php foreach($tahun as $tahunaja):?>
+                    <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>><?= $tahunaja?>
+                    </option>
+                    <?php endforeach?>
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Hitung">
+            </div>
+        </div>
+    </div>
+</form>
 <div class="card">
     <div class="card-body">
         <table class="table table-striped" id="forecast">
@@ -56,7 +75,7 @@ $tj=0; $no=1; foreach($transaksi as $t){
             <tbody>
 
                 <?php 
-                $ftahun = 2021;
+                $ftahun = $ft;
                 $keys =  array_keys($th[$ftahun]);
                 $ck = count($keys);
                 $med = ($ck + 1) / 2;
@@ -97,7 +116,7 @@ $tj=0; $no=1; foreach($transaksi as $t){
     
 
 ?>
-<?= implode('**',$month)."<br><br>"?>
+<!-- <?= implode('**',$month)."<br><br>"?>
 <?= implode('**',$th[2021])."<br><br>"?>
 <?= print_r($th)?>
-<?= intval($tj)?>
+<?= intval($tj)?> -->

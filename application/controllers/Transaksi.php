@@ -47,7 +47,9 @@ class Transaksi extends CI_Controller {
             $index++;
         }
         $this->db->insert_batch('tb_transaksi',$data);
-        $this->session->set_flashdata('message', '<div ="alert alert-success" role="alert">Data berhasil ditambahkan !</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan !</div>');
+        
+        redirect('transaksi','refresh');
         
     }
 

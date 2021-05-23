@@ -15,6 +15,8 @@ class Forecast extends CI_Controller {
     
     public function index()
     {
+        $tahun = $this->input->post('tahun');
+        $data['ft'] = $tahun;
         $data['title'] = 'Forecast';
         $data['user'] = $this->model_user->getUser();
         $data['transaksi'] = $this->model_forecast->getAll();

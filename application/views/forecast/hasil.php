@@ -16,12 +16,7 @@
     }
     // $data3=array_combine($month,$year);
     // print_r($th);
-    if($ft){
-
-        $ft;
-    }else{
-        $ft = $tahunawal;
-    }
+    
 ?>
 
 <?php 

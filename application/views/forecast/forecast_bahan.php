@@ -137,3 +137,34 @@
         </table>
     </div>
 </div>
+<?php
+    $x = $nilwal;
+    $n =  count($periode);
+    $fp = $n + 1;
+    $fsy = $sigmaY;
+    $fsxy = $sigmaXY;
+    $fsxx = $sigmaXX;
+foreach ($periode as $p ) {
+    
+    $a = $fsy/$n;
+    $b = $fsxy/$fsxx;
+    $fy = $a+$b*$x;
+    echo 'Periode '.$fp.'<br>';
+    echo 'a = '.$fsy.'/'.$n.'<br>';
+    echo 'a = '.$a.'<br>';
+    echo 'b = '.$fsxy.'/'.$fsxx.'<br>';
+    echo 'b = '.$b.'<br>';
+    echo 'Y = '.$a.' + '.$b.' x '.$x.'<br>';
+    echo 'Y = '.$fy.'<br>';
+    $fxy = $fy*$x;
+    $fxx = $x*$x;
+    $tfsy= $fsy;
+    echo '--------------------<br>';
+    $x+= 2;
+    $n++;
+    $fp++;
+    $fsy += $fy;
+    $fsxy += $fxy;
+    $fsxx += $fxx;
+}
+?>

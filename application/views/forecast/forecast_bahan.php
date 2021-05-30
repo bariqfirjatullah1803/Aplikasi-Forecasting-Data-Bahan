@@ -1,10 +1,4 @@
 <?php 
-    foreach($bahan as $b){
-        $idbahan = $b['id_bahan'];
-        $arrbahan[$idbahan] = $b['nama_bahan'];
-      
-    }
-
     // Query
     $qtahunawal = $this->db->query("SELECT MIN(date_created) AS tahunawal FROM tb_transaksi")->row_array();
     $qtahunakhir = $this->db->query("SELECT MAX(date_created) AS tahunakhir FROM tb_transaksi")->row_array();
@@ -51,120 +45,155 @@
     }
 ?>
 <?php endforeach?>
-
-<form action="<?= base_url('forecast')?>" method="post">
-    <div class="row">
-        <div class="col-4">
-            <div class="form-group row">
-                <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
-                <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
-                    <?php foreach($tahun as $tahunaja):?>
-                    <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>><?= $tahunaja?>
-                    </option>
-                    <?php endforeach?>
-                </select>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group row">
-                <label for="bahan" class="col-sm-2 col-form-label">Bahan</label>
-                <select name="bahan" class="form-control col-sm-10" id="exampleFormControlSelect1">
-                    <?php foreach($bahan as $b):?>
-                        <option value="<?= $b['id_bahan']?>" <?php if($bh == $b['id_bahan']){echo "selected";}?>><?= $b['nama_bahan']?></option>
-                    <?php endforeach?>
-                </select>
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="form-group">
-                <input class="btn btn-primary" type="submit" value="Hitung">
-            </div>
-        </div>
-    </div>
-</form>
-
 <div class="card">
-    <div class="card-body">
-        <table class="table table-striped" id="forecast">
+    <div class="card-header">
+        <form action="<?= base_url('forecast')?>" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group row">
+                        <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
+                        <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
+                            <?php foreach($tahun as $tahunaja):?>
+                            <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>>
+                                <?= $tahunaja?>
+                            </option>
+                            <?php endforeach?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" value="Hitung">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body" style="overflow-x: scroll">
+        <table class="table table-striped forecast">
             <thead>
                 <tr>
                     <th scope="col" style="display:none">#</th>
-                    <th scope="col">Periode</th>
-                    <th scope="col">Jumlah Bahan</th>
-                    <th scope="col">X</th>
+                    <th scope="col">Nama Bahan</th>
+                    <?php foreach($periode as $p):?>
+                    <th scope="col"><?= $p?></th>
+                    <?php endforeach?>
+                    <!-- <th scope="col">Jumlah Bahan</th> -->
+                    <!-- <th scope="col">X</th>
                     <th scope="col">XY</th>
-                    <th scope="col">XX</th>
+                    <th scope="col">XX</th> -->
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                    $ib = $bh;
-                    $bt = $ft;
-                    $keys = array_keys($tbb[$ib][$bt]);
-                    $ck = count($keys);
-                    $med = ($ck + 1) / 2;
-                    $nilwal = (0 - $med) - 2.5 - 2;
-                    $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
-                    $no = 1; 
-                    foreach($periode as $p):
-                ?>
+                <?php $number = 1; foreach ($bahan as $b):?>
                 <tr>
-                    <td style="display:none"><?= $no; ?></td>
-                    <td><?= $p; ?></td>
-                    <td><?= $y = $tbb[$ib][$bt][$no]; ?></td>
-                    <td><?= $nilwal; ?></td>
-                    <td><?= $xy = $tbb[$ib][$bt][$no] * $nilwal; ?></td>
-                    <td><?= $xx = $nilwal * $nilwal; ?></td>
+                    <td style="display:none"><?= $number; ?></td>
+                    <td><?= $b['nama_bahan']?></td>
+
+                    <?php 
+                        $ib = $b['id_bahan'];
+                        $bt = $ft;
+                        $keys = array_keys($tbb[$ib][$bt]);
+                        $ck = count($keys);
+                        $med = ($ck + 1) / 2;
+                        $nilwal = (0 - $med) - 2.5 - 2;
+                        $sigmaY[$ib] = $sigmaX[$ib] = $sigmaXY[$ib] = $sigmaXX[$ib] = 0;
+                        $no = 1; 
+                        foreach($periode as $p):
+                            $y = $tbb[$ib][$bt][$no];
+                    ?>
+                    <td><?= round($y).' '.$b['satuan']?></td>
+                    <?php 
+                        $nilwal; 
+                        $xy = $tbb[$ib][$bt][$no] * $nilwal; 
+                        $xx = $nilwal * $nilwal; 
+                        $nilwal+=2;
+                        $no++;
+                        $sigmaY[$ib] += $y;
+                        $sigmaX[$ib] += $nilwal;
+                        $sigmaXY[$ib] += $xy;
+                        $sigmaXX[$ib] += $xx;
+                        endforeach;
+                    ?>
+                    <!-- <td><?= round($sigmaY[$ib]).' '.$b['satuan'] ?></td> -->
                 </tr>
-                <?php 
-                    $nilwal+=2;
-                    $no++;
-                    $sigmaY += $y;
-                    $sigmaX += $nilwal;
-                    $sigmaXY += $xy;
-                    $sigmaXX += $xx;
-                    endforeach;
+                <?php
+               intval($sigmaX[$ib]);
+               intval  ($sigmaXY[$ib]);
+               intval($sigmaXX[$ib]);
                 ?>
-                <tr>
-                    <td style="display:none"><?=$no+=1?></td>
-                    <td>Jumlah</td>
-                    <td><?= intval($sigmaY)?></td>
-                    <td><?= intval($sigmaX)?></td>
-                    <td><?= intval  ($sigmaXY)?></td>
-                    <td><?= intval($sigmaXX)?></td>
-                </tr>
+
+                <?php $number++; endforeach?>
             </tbody>
         </table>
     </div>
 </div>
-<?php
-    $x = $nilwal;
-    $n =  count($periode);
-    $fp = $n + 1;
-    $fsy = $sigmaY;
-    $fsxy = $sigmaXY;
-    $fsxx = $sigmaXX;
-foreach ($periode as $p ) {
-    
-    $a = $fsy/$n;
-    $b = $fsxy/$fsxx;
-    $fy = $a+$b*$x;
-    echo 'Periode '.$fp.'<br>';
-    echo 'a = '.$fsy.'/'.$n.'<br>';
-    echo 'a = '.$a.'<br>';
-    echo 'b = '.$fsxy.'/'.$fsxx.'<br>';
-    echo 'b = '.$b.'<br>';
-    echo 'Y = '.$a.' + '.$b.' x '.$x.'<br>';
-    echo 'Y = '.$fy.'<br>';
-    $fxy = $fy*$x;
-    $fxx = $x*$x;
-    $tfsy= $fsy;
-    echo '--------------------<br>';
-    $x+= 2;
-    $n++;
-    $fp++;
-    $fsy += $fy;
-    $fsxy += $fxy;
-    $fsxx += $fxx;
-}
-?>
+<div class="card mt-3">
+    <div class="card-header">
+        Forecast Tahun <?= $ft + 1?>
+    </div>
+    <div class="card-body" style="overflow-x: scroll">
+        <table class="table table-striped forecast">
+            <thead>
+                <tr>
+                    <th scope="col" style="display:none">#</th>
+                    <th scope="col">Nama Bahan</th>
+                    <?php $cp = count($periode)+1; foreach($periode as $p):?>
+                    <th scope="col">Periode <?= $cp?></th>
+                    <?php $cp++; endforeach?>
+                    <!-- <th scope="col">Jumlah Bahan</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $fnumber = 1; 
+                foreach ($bahan as $bh ) :?>
+                <tr>
+                    <td style="display:none"><?= $fnumber; ?></td>
+                    <td><?= $bh['nama_bahan']?></td>
+
+                    <?php 
+                    $nbh = $bh['id_bahan'];
+                    $x = $nilwal;
+                    $n =  count($periode);
+                    $fp = $n + 1;
+                    $fsy = $sigmaY[$nbh];
+                    $fsxy = $sigmaXY[$nbh];
+                    $fsxx = $sigmaXX[$nbh];
+                    $fn = 1;
+                    foreach ($periode as $p ) {
+                        
+                        $a = $fsy/$n;
+                        $b = $fsxy/$fsxx;
+                        $fy = $a+$b*$x;
+                        // echo 'Periode '.$fp.'<br>';
+                        // echo 'a = '.$fsy.'/'.$n.'<br>';
+                        // echo 'a = '.$a.'<br>';
+                        // echo 'b = '.$fsxy.'/'.$fsxx.'<br>';
+                        // echo 'b = '.$b.'<br>';
+                        // echo 'Y = '.$a.' + '.$b.' x '.$x.'<br>';
+                        // echo 'Y = '.$fy.'<br>';
+                        ?>
+                    <td><?= round($fy).' '.$bh['satuan']?></td>
+                    <?php
+                        $fxy = $fy*$x;
+                        $fxx = $x*$x;
+                        $tfsy= $fsy;
+                        // echo '--------------------<br>';
+                        $x+= 2;
+                        $n++;
+                        $fp++;
+                        $fsy += $fy;
+                        $fsxy += $fxy;
+                        $fsxx += $fxx;
+                       
+                        $fn++;
+                    }
+                   ?>
+                </tr>
+                <?php $fnumber++; endforeach;?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- <canvas id="myChart" width="400" height="100"></canvas> -->

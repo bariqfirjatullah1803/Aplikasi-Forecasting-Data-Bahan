@@ -42,7 +42,8 @@ class Auth extends CI_Controller {
             // jika usernya aktif
             if (password_verify($password, $user['password'])) {
                 $data = [
-                    'username' => $user['username']
+                    'username' => $user['username'],
+                    'role_id' => $user['role_id'],
                 ];
                 $this->session->set_userdata($data);
                 redirect('admin');
@@ -62,6 +63,24 @@ class Auth extends CI_Controller {
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been logged out!</div>');
         redirect('auth');
+    }
+    public function password()
+    {
+        $this->load->model('model_user');
+        
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|');
+        
+        if ($this->form_validation->run() == FALSE) {
+            $data['title'] = 'Change Password';
+            $data['user'] = $this->model_user->getUser();
+            $this->t->load('admin/template','auth/password',$data);
+        } else {
+           $data = [
+               'password' => password_hash($this->input->post('password'),PASSWORD_DEFAULT)
+           ];
+           $this->db->update('tb_user', $data);
+        }
+        
     }
         
 }

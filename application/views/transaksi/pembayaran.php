@@ -1,5 +1,6 @@
 <?= $this->session->flashdata('message');
 ?>
+
 <div class="row">
     <div class="col-5">
         <div class="card">
@@ -8,12 +9,12 @@
 
                     <div class="form-group">
                         <label for="nama_pembeli">Nama Pembeli</label>
-                        <input type="text" class="form-control" id="nama_pembeli" name="nama_pembeli">
+                        <input type="text" class="form-control" id="nama_pembeli" name="nama_pembeli" required>
                     </div>
                     <div class="form-group">
                         <label for="unit">Unit</label>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="unit[]">
+                            <input type="text" class="form-control" name="unit[]" required>
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button" id="btnAdd">
                                     <i class="fa fa-plus"></i>
@@ -25,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Plan</label>
-                        <select class="form-control" id="exampleFormControlSelect1" name="plan">
+                        <select class="form-control" id="exampleFormControlSelect1" name="plan" required>
                             <?php
                             foreach ($plan as $p ) {
                                 echo '<option  value="'.$p['id_plan'].'">'.$p['nama_plan'].'</option>';
@@ -36,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Type Rumah</label>
-                        <select class="form-control" id="exampleFormControlSelect1" name="rumah">
+                        <select class="form-control" id="exampleFormControlSelect1" name="rumah" required>
                             <?php
                             foreach ($type_rumah as $tp ) {
                                 echo '<option  value="'.$tp['id_rumah'].'">'.$tp['type_rumah'].'</option>';
@@ -47,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label for="harga">Harga</label>
-                        <input type="text" class="form-control" name="harga">
+                        <input type="text" class="form-control" name="harga" required>
                     </div>
 
                     <input type="submit" class="btn btn-primary" value="Save">

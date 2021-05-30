@@ -54,6 +54,26 @@ class Bahan extends CI_Controller {
         redirect('bahan','refresh');
 
     }
+    public function stok()
+    {
+        $data['user'] = $this->model_user->getUser();
+        $data['title'] = 'Stok Bahan';
+        $data['bahan'] = $this->model_bahan->getBahan();
+        $this->t->load('admin/template','bahan/stok',$data);
+    }
+
+    public function add_stok()
+    {
+        $data = [
+            'id_bahan' => $this->input->post('bahan'),
+            'stok' => $this->input->post('stok')
+        ];
+        $this->db->insert('tb_stok', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di tambahkan!</div>');
+        
+        redirect('bahan/stok','refresh');
+        
+    }
     
 
 }

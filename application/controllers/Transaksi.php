@@ -80,7 +80,7 @@ class Transaksi extends CI_Controller
                 $msg .= $nama_bahan[$no]['nama_bahan'] . ' , ';
                 $no++;
             }
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Bahan ' . substr($msg, 0, -1) . ' Kurang !</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" style="text-transform:lowercase" role="alert"><span style="text-transform:capitalize">Bahan : </span> ' . substr($msg, 0, -1) . ' Kurang !</div>');
 
             redirect('bahan/stok');
 

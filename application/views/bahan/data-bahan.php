@@ -58,6 +58,7 @@
                     <th>Nama Bahan</th>
                     <th>Satuan</th>
                     <th>Harga</th>
+                    <th>Stok</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -68,6 +69,7 @@
                     <td><?= $db['nama_bahan']?></td>
                     <td><?= $db['satuan']?></td>
                     <td><?= $db['harga']?></td>
+                    <td><?= $db['stok']?></td>
                     <td>
                         <button data-toggle="modal" data-target="#modalEdit<?= $db['id_bahan']?>"
                             class="btn btn-sm btn-warning">Edit</button>
@@ -110,6 +112,14 @@
                                             id="harga" name="harga" value="<?= $db['harga']?>"
                                             oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
                                         <?= form_error('harga','<div class="invalid-feedback">','</div>')?>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stok">Stok Bahan</label>
+                                        <input type="number" min="0"
+                                            class="form-control text-capitalize <?php if(form_error('stok')){ echo 'is-invalid';}?>"
+                                            id="stok" name="stok" value="<?= $db['stok']?>"
+                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                                        <?= form_error('stok','<div class="invalid-feedback">','</div>')?>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

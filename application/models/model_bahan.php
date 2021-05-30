@@ -39,6 +39,7 @@ class model_bahan extends CI_Model {
             'nama_bahan' => $this->input->post('nama'),
             'satuan' => $this->input->post('satuan'),
             'harga' => $this->input->post('harga'),
+            'stok' => $this->input->post('stok'),
         ];
         $this->db->where('id_bahan', $id);
         $this->db->update('tb_bahan',$data);

@@ -75,17 +75,13 @@
                 <tr>
                     <th scope="col" style="display:none">#</th>
                     <th scope="col">Nama Bahan</th>
-                    <?php foreach($periode as $p):?>
+                    <?php $arrp=''; foreach($periode as $p):?>
                     <th scope="col"><?= $p?></th>
-                    <?php endforeach?>
-                    <!-- <th scope="col">Jumlah Bahan</th> -->
-                    <!-- <th scope="col">X</th>
-                    <th scope="col">XY</th>
-                    <th scope="col">XX</th> -->
+                    <?php $arrp .= "'$p'". ", ";  endforeach?>
                 </tr>
             </thead>
             <tbody>
-                <?php $number = 1; foreach ($bahan as $b):?>
+                <?php $sy1=''; $number = 1; foreach ($bahan as $b):?>
                 <tr>
                     <td style="display:none"><?= $number; ?></td>
                     <td><?= $b['nama_bahan']?></td>
@@ -118,6 +114,8 @@
                     <!-- <td><?= round($sigmaY[$ib]).' '.$b['satuan'] ?></td> -->
                 </tr>
                 <?php
+                $sigY = round($sigmaY[$ib]);
+               $sy1 .= "$sigY". ", ";
                intval($sigmaX[$ib]);
                intval  ($sigmaXY[$ib]);
                intval($sigmaXX[$ib]);
@@ -140,17 +138,24 @@
                     <th scope="col">Nama Bahan</th>
                     <?php $cp = count($periode)+1; foreach($periode as $p):?>
                     <th scope="col">Periode <?= $cp?></th>
-                    <?php $cp++; endforeach?>
+                    <?php $arrp .= "'Periode $cp'". ", "; $cp++; endforeach?>
                     <!-- <th scope="col">Jumlah Bahan</th> -->
                 </tr>
             </thead>
             <tbody>
                 <?php 
                 $fnumber = 1; 
+                $arbahan = '';
+                
+                $sy2 = '';
                 foreach ($bahan as $bh ) :?>
                 <tr>
+                    <?php 
+                    $nbahan = $bh['nama_bahan'];
+                    $arbahan .= "'$nbahan'". ", ";
+                    ?>
                     <td style="display:none"><?= $fnumber; ?></td>
-                    <td><?= $bh['nama_bahan']?></td>
+                    <td><?= $nbahan?></td>
 
                     <?php 
                     $nbh = $bh['id_bahan'];
@@ -161,6 +166,7 @@
                     $fsxy = $sigmaXY[$nbh];
                     $fsxx = $sigmaXX[$nbh];
                     $fn = 1;
+                    $tfsy = 0;
                     foreach ($periode as $p ) {
                         
                         $a = $fsy/$n;
@@ -178,8 +184,7 @@
                     <?php
                         $fxy = $fy*$x;
                         $fxx = $x*$x;
-                        $tfsy= $fsy;
-                        // echo '--------------------<br>';
+                        $tfsy += $fy;
                         $x+= 2;
                         $n++;
                         $fp++;
@@ -189,6 +194,9 @@
                        
                         $fn++;
                     }
+                    $sigY2 = round($tfsy);
+                        $sy2 .= "$sigY2". ", ";
+                    // echo $sigY2.'<br>';
                    ?>
                 </tr>
                 <?php $fnumber++; endforeach;?>
@@ -196,4 +204,38 @@
         </table>
     </div>
 </div>
-<!-- <canvas id="myChart" width="400" height="100"></canvas> -->
+<!-- <?= $sy2?> -->
+<div class="card mt-3">
+    <div class="card-header">Grafik</div>
+    <div class="card-body">
+        <canvas id="myChart" width="400" height="100"></canvas>
+
+    </div>
+</div>
+
+<script>
+var ctx = document.getElementById('myChart');
+// const labels = [<?= $arrp?>];
+const bahan = [<?= $arbahan?>];
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: bahan,
+        datasets: [{
+                label: <?= $ft?>,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [<?= $sy1?>],
+            },
+            {
+                label: <?= $ft + 1?>,
+                backgroundColor: 'blue',
+                borderColor: 'blue',
+                data: [<?= $sy2?>],
+            },
+
+        ]
+    },
+    options: {}
+});
+</script>

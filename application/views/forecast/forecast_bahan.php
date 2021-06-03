@@ -70,7 +70,7 @@
         </form>
     </div>
     <div class="card-body" style="overflow-x: scroll">
-        <table class="table table-striped forecast">
+        <table class="table table-striped forecast text-center ">
             <thead>
                 <tr>
                     <th scope="col" style="display:none">#</th>

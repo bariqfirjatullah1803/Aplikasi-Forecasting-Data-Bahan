@@ -12,6 +12,9 @@ class Anggaran extends CI_Controller {
            
             redirect('auth');
          }
+         if($this->session->userdata('role_id') != 1){
+            redirect('auth');
+        }
         $this->load->model('model_user');
         $this->load->model('model_anggaran');
         $this->load->model('model_rumah');

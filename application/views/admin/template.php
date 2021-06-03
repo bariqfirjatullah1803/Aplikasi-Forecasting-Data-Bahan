@@ -96,6 +96,12 @@
                     <span>Forecast Bahan</span>
                 </a>
             </li>
+            <li class="nav-item <?php if ($title == 'Forecast Penjualan') {echo 'active';}?>">
+                <a class="nav-link" href="<?=base_url('forecast/penjualan')?>">
+                    <i class="fas fa-fw fa-chart-bar"></i>
+                    <span>Forecast Penjualan</span>
+                </a>
+            </li>
             <?php endif?>
             <!-- Divider -->
             <hr class="sidebar-divider">

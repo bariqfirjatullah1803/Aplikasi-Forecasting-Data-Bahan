@@ -55,15 +55,18 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <?php if ($user['role_id'] == 1): ?>
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
-                Data
+                Management
             </div>
-
+            <li class="nav-item <?php if ($title == 'Stok Bahan') {echo 'active';}?>">
+                <a class="nav-link" href="<?=base_url('Bahan/stok')?>">
+                    <i class="fas fa-fw fa-box"></i>
+                    <span>Stok Bahan</span>
+                </a>
+            </li>
+            <?php if ($user['role_id'] == 1): ?>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item <?php if ($title == 'Data Bahan') {echo 'active';}?>">
                 <a class="nav-link" href="<?=base_url('bahan')?>">
@@ -83,10 +86,18 @@
                     <span>Data Anggaran</span>
                 </a>
             </li>
-
+            <li class="nav-item <?php if ($title == 'Data User') {echo 'active';}?>">
+                <a class="nav-link" href="<?=base_url('data_user')?>">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Data User</span>
+                </a>
+            </li>
+            <?php endif?>
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            <hr class="sidebar-divider">
 
+            <?php if ($user['role_id'] == 1): ?>
+            <!-- Divider -->
             <div class="sidebar-heading">
                 Perancangan
             </div>
@@ -102,21 +113,9 @@
                     <span>Forecast Penjualan</span>
                 </a>
             </li>
+            <hr class="sidebar-divider">
             <?php endif?>
             <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">
-                Management
-            </div>
-            <li class="nav-item <?php if ($title == 'Stok Bahan') {echo 'active';}?>">
-                <a class="nav-link" href="<?=base_url('Bahan/stok')?>">
-                    <i class="fas fa-fw fa-box"></i>
-                    <span>Stok Bahan</span>
-                </a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">
@@ -166,7 +165,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?=base_url('auth/password')?>">
+                                <a class="dropdown-item" href="<?=base_url('admin/password')?>">
                                     <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
@@ -239,6 +238,7 @@
         </div>
     </div>
 
+
     <!-- Bootstrap core JavaScript-->
 
     <script src="<?=base_url('assets/')?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -254,7 +254,7 @@
     </script>
 
 
-   
+
     <script>
     $(document).ready(function() {
         let id = 0;

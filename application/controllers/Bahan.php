@@ -25,7 +25,7 @@ class Bahan extends CI_Controller {
             $this->model_bahan->save();
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di simpan ! </div>');
             // $this->bahan();            
-            redirect('bahan','refresh');
+            redirect('bahan');
             
         }else {
             $data = [
@@ -43,7 +43,7 @@ class Bahan extends CI_Controller {
         $this->model_bahan->edit($id);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di edit ! </div>');
 
-        redirect('bahan','refresh');
+        redirect('bahan');
         
     }
     public function delete($id)
@@ -51,7 +51,7 @@ class Bahan extends CI_Controller {
         $this->model_bahan->delete($id);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di hapus ! </div>');
 
-        redirect('bahan','refresh');
+        redirect('bahan');
 
     }
     public function stok()
@@ -59,6 +59,8 @@ class Bahan extends CI_Controller {
         $data['user'] = $this->model_user->getUser();
         $data['title'] = 'Stok Bahan';
         $data['bahan'] = $this->model_bahan->getBahan();
+        $timenow = date("Y-m-d",time());
+        $data['bahan_masuk'] = $this->db->query("SELECT tb_stok.date_created,SUM(tb_stok.stok) as stok,tb_bahan.satuan,tb_bahan.nama_bahan FROM tb_stok INNER JOIN tb_bahan ON tb_stok.id_bahan = tb_bahan.id_bahan WHERE tb_stok.date_created = '$timenow'")->result_array();
         $this->t->load('admin/template','bahan/stok',$data);
     }
 
@@ -66,12 +68,13 @@ class Bahan extends CI_Controller {
     {
         $data = [
             'id_bahan' => $this->input->post('bahan'),
-            'stok' => $this->input->post('stok')
+            'stok' => $this->input->post('stok'),
+            'date_created' => date("Y-m-d",time())
         ];
         $this->db->insert('tb_stok', $data);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di tambahkan!</div>');
         
-        redirect('bahan/stok','refresh');
+        redirect('bahan/stok');
         
     }
     

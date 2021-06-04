@@ -27,6 +27,18 @@ $n = count($tahun);
 $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
 ?>
 <div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-10">
+                Data Penjualan Rumah Per Tahun
+            </div>
+            <div class="col-2">
+                <form action="<?= base_url('laporan/penjualan')?>" target="_blank" method="post">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-print"></i> Cetak Laporan</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="card-body">
         <table class="table table-striped forecast text-center">
             <thead>

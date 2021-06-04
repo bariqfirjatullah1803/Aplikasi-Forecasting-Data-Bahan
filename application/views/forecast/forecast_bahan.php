@@ -47,27 +47,37 @@
 <?php endforeach?>
 <div class="card">
     <div class="card-header">
-        <form action="<?= base_url('forecast')?>" method="post">
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
-                        <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
-                            <?php foreach($tahun as $tahunaja):?>
-                            <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>>
-                                <?= $tahunaja?>
-                            </option>
-                            <?php endforeach?>
-                        </select>
+        <div class="row">
+            <div class="col-10">
+                <form action="<?= base_url('forecast')?>" method="post">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
+                                <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
+                                    <?php foreach($tahun as $tahunaja):?>
+                                    <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>>
+                                        <?= $tahunaja?>
+                                    </option>
+                                    <?php endforeach?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" value="Hitung">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-2">
-                    <div class="form-group">
-                        <input class="btn btn-primary" type="submit" value="Hitung">
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
+            <div class="col-2">
+                <form action="<?= base_url('laporan')?>" target="_blank" method="post">
+                    <input type="hidden" value="<?= $ft?>" name="tahun">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-print"></i> Cetak Laporan</button>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="card-body" style="overflow-x: scroll">
         <table class="table table-striped forecast text-center ">

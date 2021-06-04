@@ -36,11 +36,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Type Rumah</label>
+                        <label for="exampleFormControlSelect1">Jenis</label>
                         <select class="form-control" id="exampleFormControlSelect1" name="rumah" required>
+                        <option value="" selected>Tanah</option>
                             <?php
                             foreach ($type_rumah as $tp ) {
-                                echo '<option  value="'.$tp['id_rumah'].'">'.$tp['type_rumah'].'</option>';
+                                echo '<option  value="'.$tp['id_rumah'].'">Rumah type '.$tp['type_rumah'].'</option>';
                             }
                             ?>
 

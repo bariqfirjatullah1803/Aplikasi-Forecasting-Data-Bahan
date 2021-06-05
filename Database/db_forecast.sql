@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 30/05/2021 16:19:16
+ Date: 05/06/2021 16:25:34
 */
 
 SET NAMES utf8mb4;
@@ -153,7 +153,7 @@ CREATE TABLE `tb_bahan`  (
 -- ----------------------------
 -- Records of tb_bahan
 -- ----------------------------
-INSERT INTO `tb_bahan` VALUES (1, 'BATA MERAH', 'PCS', 600, 10);
+INSERT INTO `tb_bahan` VALUES (1, 'BATA MERAH', 'PCS', 600, 40);
 INSERT INTO `tb_bahan` VALUES (2, 'BATU PONDASI', 'm³', 185000, 1997);
 INSERT INTO `tb_bahan` VALUES (3, 'BENDRAT', 'ROLL', 350000, 0);
 INSERT INTO `tb_bahan` VALUES (4, 'BESI', 'PCS', 67000, 45);
@@ -222,15 +222,15 @@ CREATE TABLE `tb_stok`  (
   `id_stok` int(11) NOT NULL AUTO_INCREMENT,
   `id_bahan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `stok` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `date_created` date NULL DEFAULT NULL,
   PRIMARY KEY (`id_stok`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_stok
 -- ----------------------------
-INSERT INTO `tb_stok` VALUES (3, '1', '10');
-INSERT INTO `tb_stok` VALUES (4, '2', '2000');
-INSERT INTO `tb_stok` VALUES (5, '1', '17000');
+INSERT INTO `tb_stok` VALUES (6, '1', '10', '2021-06-03');
+INSERT INTO `tb_stok` VALUES (7, '1', '20', '2021-06-03');
 
 -- ----------------------------
 -- Table structure for tb_transaksi
@@ -246,7 +246,7 @@ CREATE TABLE `tb_transaksi`  (
   `id_rumah` int(11) NULL DEFAULT NULL,
   `date_created` date NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_transaksi
@@ -259,19 +259,7 @@ INSERT INTO `tb_transaksi` VALUES (5, 1621769695, 'Mujianto', '35', 1, '12000000
 INSERT INTO `tb_transaksi` VALUES (6, 1621769734, 'Pralis Suyono', '3', 1, '85000000', 1, '2019-06-01');
 INSERT INTO `tb_transaksi` VALUES (7, 1621769869, 'Asmad', '1,2', 1, '88000000', 1, '2020-02-29');
 INSERT INTO `tb_transaksi` VALUES (8, 1621769918, 'Samsul Arifin', '16,17,18', 1, '180000000', 2, '2020-09-01');
-INSERT INTO `tb_transaksi` VALUES (9, 1622310391, 'Bariq Firjatullah', '1', 1, '2000000', 1, '2021-05-29');
-
--- ----------------------------
--- Table structure for tb_unit
--- ----------------------------
-DROP TABLE IF EXISTS `tb_unit`;
-CREATE TABLE `tb_unit`  (
-  `id_unit` int(11) NOT NULL AUTO_INCREMENT,
-  `unit` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `id_plan` int(11) NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_unit`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+INSERT INTO `tb_transaksi` VALUES (11, 1622747393, 'Bariq Firjatullah', '10', 2, '200000000', 2, '2021-06-03');
 
 -- ----------------------------
 -- Table structure for tb_user
@@ -284,13 +272,13 @@ CREATE TABLE `tb_user`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `role_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
 INSERT INTO `tb_user` VALUES (1, 'admin', 'admin', '$2y$10$ZL8Cziy79vyIEazdelVbjeA7CP.L2hN2pKnzD3TxkuWbfC0BDrEEm', '2');
-INSERT INTO `tb_user` VALUES (2, 'Super Admin', 'superadmin', '$2y$10$6wcMd81.bQuxLkp4EMfRteXFygxma9O.1uzAm1PyArcjH0mc9UP.C', '1');
+INSERT INTO `tb_user` VALUES (2, 'Super Admin', 'superadmin', '$2y$10$n35DSYQfL0sEoEKXbqCAOOrfpOlSFOnGv6saTnPHdx0RbPtlbBXCy', '1');
 
 -- ----------------------------
 -- Triggers structure for table tb_rumah

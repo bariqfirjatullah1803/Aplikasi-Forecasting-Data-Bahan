@@ -20,19 +20,42 @@ class Admin extends CI_Controller {
 
     public function index()
     {
-        $data['user'] = $this->model_user->getUser();
-        $data['title'] = 'Dashboard';
-        $data['count_bahan'] = $this->model_admin->count('id_bahan','tb_bahan');
-        $data['count_rumah'] = $this->model_admin->count('id_rumah','tb_rumah');
-        $this->t->load('admin/template','admin/dashboard',$data);
+        $this->proyek();
     }
     public function proyek()
     {
-        $data['title'] = 'Forecast';
+        $date = date("Y-m-d",time());
+        $data['title'] = 'Pembangunan hari ini tanggal : '.$date;
         $data['user'] = $this->model_user->getUser();
-        $data['transaksi'] = $this->db->query("SELECT * FROM tb_transaksi WHERE id = 11")->result_array();
+        $data['transaksi'] = $this->model_forecast->getAll();
         $data['bahan'] = $this->model_bahan->getBahan();
         $this->t->load('admin/template','proyek/proses-proyek',$data);
+    }
+    public function pengerjaan()
+    {
+        $data = [
+            'id_transaksi' => $this->input->post('id'),
+            'date_now' => $this->input->post('date'),
+            'status' => $this->input->post('status')
+        ];
+        $this->db->insert('tb_pengerjaan', $data);
+        $id_rumah = $this->input->post('rumah');
+        $queryAnggaran = $this->db->query("SELECT * FROM tb_anggaran WHERE id_rumah = $id_rumah")->result_array();
+        $queryBahan = $this->db->query("SELECT * FROM tb_bahan")->result_array();
+        $bahan = array();
+        for ($i=0; $i < count($queryAnggaran); $i++) { 
+            $bahan[] = array(
+                'id_bahan' => $queryBahan[$i]['id_bahan'],
+                'stok' => $queryBahan[$i]['stok'] - $queryAnggaran[$i]['jumlah'],
+
+            );
+        }
+        $this->db->update_batch('tb_bahan',$bahan,'id_bahan');
+        $this->session->set_flashdata('message', '<div role="alert" class="alert alert-success">Pembangunan teproses !</div>');
+        
+        redirect('admin/proyek');
+        
+        
     }
     public function password()
     {

@@ -17,7 +17,7 @@
         }
     }
 ?>
-
+ 
 <?php foreach ($transaksi as $trns ) :?>
 
 <?php

@@ -33,18 +33,54 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th class="d-none">#</th>
+                                    <th>#</th>
                                     <th>Bahan</th>
                                     <th>Jumlah</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1; foreach($bahan_masuk as $bm):?>
                                 <tr>
-                                    <td class="d-none"><?= $no?></td>
+                                    <td><?= $no?></td>
                                     <td><?= $bm['nama_bahan']?></td>
                                     <td><?= $bm['stok'].' '.$bm['satuan']?></td>
+                                    <td><a title="Edit" href="" class="btn btn-warning btn-sm" data-toggle="modal"
+                                            data-target="#exampleModal<?= $no?>"><i class="fas fa-edit"></i></a></td>
                                 </tr>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal<?= $no?>" tabindex="-1"
+                                    aria-labelledby="exampleModal<?= $no?>Label" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModal<?= $no?>Label">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="<?= base_url('bahan/update_stok/').$bm['id_stok']; ?>" method="post">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="namaBahan" class="form-label">Nama Bahan</label>
+                                                        <input type="text" class="form-control"
+                                                            value="<?= $bm['nama_bahan']?>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="stok" class="form-label">Stok</label>
+                                                        <input name="stok" type="text" class="form-control" value="<?= $bm['stok']?>">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <?php $no++; endforeach;?>
                             </tbody>
                         </table>

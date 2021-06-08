@@ -11,7 +11,7 @@
  Target Server Version : 100416
  File Encoding         : 65001
 
- Date: 05/06/2021 16:25:34
+ Date: 09/06/2021 04:12:21
 */
 
 SET NAMES utf8mb4;
@@ -146,39 +146,58 @@ CREATE TABLE `tb_bahan`  (
   `nama_bahan` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `satuan` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `harga` int(128) NULL DEFAULT NULL,
-  `stok` int(255) NOT NULL,
+  `stok` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_bahan`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_bahan
 -- ----------------------------
-INSERT INTO `tb_bahan` VALUES (1, 'BATA MERAH', 'PCS', 600, 40);
-INSERT INTO `tb_bahan` VALUES (2, 'BATU PONDASI', 'm³', 185000, 1997);
-INSERT INTO `tb_bahan` VALUES (3, 'BENDRAT', 'ROLL', 350000, 0);
-INSERT INTO `tb_bahan` VALUES (4, 'BESI', 'PCS', 67000, 45);
-INSERT INTO `tb_bahan` VALUES (5, 'BUBUNGAN', 'm²', 70000, 0);
-INSERT INTO `tb_bahan` VALUES (6, 'KERAMIK', 'DUS', 65000, 0);
-INSERT INTO `tb_bahan` VALUES (7, 'KERAMIK DINDING KM 20X25 CM ', 'PCS', 75000, 20);
-INSERT INTO `tb_bahan` VALUES (8, 'KERAMIK LANTAI KM 20X20 ', 'PCS', 70000, 15);
-INSERT INTO `tb_bahan` VALUES (9, 'KUSEN JENDELA', 'PCS', 1080000, 9);
-INSERT INTO `tb_bahan` VALUES (10, 'KUSEN PINTU', 'PCS', 1900000, 1);
-INSERT INTO `tb_bahan` VALUES (11, 'LIST PLAFOND GYPSUM', 'm²', 17500, 0);
-INSERT INTO `tb_bahan` VALUES (12, 'LIST PLANK KAYU (25 TEBAL 2CM)', 'm²', 90000, 45);
-INSERT INTO `tb_bahan` VALUES (13, 'PAKU BETON', 'KG', 38000, 2);
-INSERT INTO `tb_bahan` VALUES (14, 'PAKU USUK', 'KG', 36000, 0);
-INSERT INTO `tb_bahan` VALUES (15, 'PAPAN KAYU', 'LEMBAR', 13000, 0);
-INSERT INTO `tb_bahan` VALUES (16, 'PASIR', 'm³', 1500000, 65);
-INSERT INTO `tb_bahan` VALUES (17, 'PENUTUP ATAP(GENTENG KERAMIK KIA)', 'm²', 90000, 0);
-INSERT INTO `tb_bahan` VALUES (18, 'PLAFOND GYPSUMBOARD T=9MM RANGKA KAYU', 'm²', 72500, 4);
-INSERT INTO `tb_bahan` VALUES (19, 'PLEASS', 'SAK', 10000, 50);
-INSERT INTO `tb_bahan` VALUES (20, 'PLIN KERAMIK 10X30CM ', 'PCS', 65000, 0);
-INSERT INTO `tb_bahan` VALUES (21, 'RANGKA ATAP (KUDA2, USUK, RENG KAYU KALIMANTAN)', 'm²', 143000, 0);
-INSERT INTO `tb_bahan` VALUES (22, 'SEMEN', 'SAK', 55000, 20);
-INSERT INTO `tb_bahan` VALUES (23, 'PIPA 3/4', 'PCS', 26000, 36);
-INSERT INTO `tb_bahan` VALUES (24, 'PIPA 1/2', 'PCS', 21000, 7);
-INSERT INTO `tb_bahan` VALUES (25, 'PIPA 3', 'PCS', 38000, 0);
-INSERT INTO `tb_bahan` VALUES (26, 'PIPA 4', 'PCS', 57000, 3);
+INSERT INTO `tb_bahan` VALUES (1, 'BATA MERAH', 'PCS', 600, '8457.7142858');
+INSERT INTO `tb_bahan` VALUES (2, 'BATU PONDASI', 'm³', 185000, '9999.885714286');
+INSERT INTO `tb_bahan` VALUES (3, 'BENDRAT', 'ROLL', 350000, '9999.885714286');
+INSERT INTO `tb_bahan` VALUES (4, 'BESI', 'PCS', 67000, '9994.285714286');
+INSERT INTO `tb_bahan` VALUES (5, 'BUBUNGAN', 'm²', 70000, '9994.714285714');
+INSERT INTO `tb_bahan` VALUES (6, 'KERAMIK', 'DUS', 65000, '9994.285714286');
+INSERT INTO `tb_bahan` VALUES (7, 'KERAMIK DINDING KM 20X25 CM ', 'PCS', 75000, '9994.857142858');
+INSERT INTO `tb_bahan` VALUES (8, 'KERAMIK LANTAI KM 20X20 ', 'PCS', 70000, '9999.428571428');
+INSERT INTO `tb_bahan` VALUES (9, 'KUSEN JENDELA', 'PCS', 1080000, '9999.828571428');
+INSERT INTO `tb_bahan` VALUES (10, 'KUSEN PINTU', 'PCS', 1900000, '9999.857142858');
+INSERT INTO `tb_bahan` VALUES (11, 'LIST PLAFOND GYPSUM', 'm²', 17500, '9994');
+INSERT INTO `tb_bahan` VALUES (12, 'LIST PLANK KAYU (25 TEBAL 2CM)', 'm²', 90000, '9999.285691428');
+INSERT INTO `tb_bahan` VALUES (13, 'PAKU BETON', 'KG', 38000, '9999.428571428');
+INSERT INTO `tb_bahan` VALUES (14, 'PAKU USUK', 'KG', 36000, '9999.285714286');
+INSERT INTO `tb_bahan` VALUES (15, 'PAPAN KAYU', 'LEMBAR', 13000, '9993.714285714');
+INSERT INTO `tb_bahan` VALUES (16, 'PASIR', 'm³', 1500000, '9999.857142858');
+INSERT INTO `tb_bahan` VALUES (17, 'PENUTUP ATAP(GENTENG KERAMIK KIA)', 'm²', 90000, '9993.571428572');
+INSERT INTO `tb_bahan` VALUES (18, 'PLAFOND GYPSUMBOARD T=9MM RANGKA KAYU', 'm²', 72500, '9993.857142858');
+INSERT INTO `tb_bahan` VALUES (19, 'PLEASS', 'SAK', 10000, '9999.371428572');
+INSERT INTO `tb_bahan` VALUES (20, 'PLIN KERAMIK 10X30CM ', 'PCS', 65000, '9999.371428572');
+INSERT INTO `tb_bahan` VALUES (21, 'RANGKA ATAP (KUDA2, USUK, RENG KAYU KALIMANTAN)', 'm²', 143000, '9993.714285714');
+INSERT INTO `tb_bahan` VALUES (22, 'SEMEN', 'SAK', 55000, '9994.428571428');
+INSERT INTO `tb_bahan` VALUES (23, 'PIPA 3/4', 'PCS', 26000, '9999.542857142');
+INSERT INTO `tb_bahan` VALUES (24, 'PIPA 1/2', 'PCS', 21000, '9999.714285714');
+INSERT INTO `tb_bahan` VALUES (25, 'PIPA 3', 'PCS', 38000, '9999.628571428');
+INSERT INTO `tb_bahan` VALUES (26, 'PIPA 4', 'PCS', 57000, '9999.714285714');
+
+-- ----------------------------
+-- Table structure for tb_pengerjaan
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_pengerjaan`;
+CREATE TABLE `tb_pengerjaan`  (
+  `id_pengerjaan` int(11) NOT NULL AUTO_INCREMENT,
+  `id_transaksi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `date_now` date NULL DEFAULT NULL,
+  `status` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_pengerjaan`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_pengerjaan
+-- ----------------------------
+INSERT INTO `tb_pengerjaan` VALUES (1, '12', '2021-06-09', 1);
+INSERT INTO `tb_pengerjaan` VALUES (2, '12', '2021-06-08', 1);
+INSERT INTO `tb_pengerjaan` VALUES (3, '11', '2021-06-08', 1);
 
 -- ----------------------------
 -- Table structure for tb_plan
@@ -224,13 +243,14 @@ CREATE TABLE `tb_stok`  (
   `stok` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date_created` date NULL DEFAULT NULL,
   PRIMARY KEY (`id_stok`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_stok
 -- ----------------------------
 INSERT INTO `tb_stok` VALUES (6, '1', '10', '2021-06-03');
-INSERT INTO `tb_stok` VALUES (7, '1', '20', '2021-06-03');
+INSERT INTO `tb_stok` VALUES (7, '1', '15', '2021-06-03');
+INSERT INTO `tb_stok` VALUES (9, '1', '15', '2021-06-06');
 
 -- ----------------------------
 -- Table structure for tb_transaksi
@@ -246,7 +266,7 @@ CREATE TABLE `tb_transaksi`  (
   `id_rumah` int(11) NULL DEFAULT NULL,
   `date_created` date NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_transaksi
@@ -260,6 +280,7 @@ INSERT INTO `tb_transaksi` VALUES (6, 1621769734, 'Pralis Suyono', '3', 1, '8500
 INSERT INTO `tb_transaksi` VALUES (7, 1621769869, 'Asmad', '1,2', 1, '88000000', 1, '2020-02-29');
 INSERT INTO `tb_transaksi` VALUES (8, 1621769918, 'Samsul Arifin', '16,17,18', 1, '180000000', 2, '2020-09-01');
 INSERT INTO `tb_transaksi` VALUES (11, 1622747393, 'Bariq Firjatullah', '10', 2, '200000000', 2, '2021-06-03');
+INSERT INTO `tb_transaksi` VALUES (12, 1622747393, 'Bungkring', '11', 2, '120000000', 3, '2021-06-03');
 
 -- ----------------------------
 -- Table structure for tb_user
@@ -310,6 +331,18 @@ delimiter ;
 DROP TRIGGER IF EXISTS `update_stok`;
 delimiter ;;
 CREATE TRIGGER `update_stok` AFTER INSERT ON `tb_stok` FOR EACH ROW BEGIN
+UPDATE tb_bahan SET stok = stok + NEW.stok WHERE id_bahan = NEW.id_bahan;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table tb_stok
+-- ----------------------------
+DROP TRIGGER IF EXISTS `replace_stok`;
+delimiter ;;
+CREATE TRIGGER `replace_stok` AFTER UPDATE ON `tb_stok` FOR EACH ROW BEGIN
+UPDATE tb_bahan SET stok = stok - OLD.stok WHERE id_bahan = OLD.id_bahan;
 UPDATE tb_bahan SET stok = stok + NEW.stok WHERE id_bahan = NEW.id_bahan;
 END
 ;;

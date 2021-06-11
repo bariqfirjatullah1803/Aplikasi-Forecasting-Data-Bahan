@@ -161,6 +161,14 @@ foreach ($queryTransaksi as $tq ) {
                 <input type="hidden" name="rumah" value="<?= $qtbi['id_rumah']?>">
                 <button type="submit" class="btn btn-primary btn-block">Kerjakan</button>
             </form>
+            <?php else:?>
+            <form action="<?= base_url('admin/pembatalan')?>" method="post">
+                <input type="hidden" name="id" value="<?= $qtbi['id']?>">
+                <input type="hidden" name="date" value="<?= $now?>">
+                <input type="hidden" name="status" value="1">
+                <input type="hidden" name="rumah" value="<?= $qtbi['id_rumah']?>">
+                <button type="submit" class="btn btn-danger btn-block">Batalkan</button>
+            </form>
             <?php endif?>
         </div>
     </div>

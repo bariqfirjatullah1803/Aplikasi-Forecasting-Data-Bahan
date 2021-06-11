@@ -21,11 +21,11 @@
     <link href="<?=base_url('assets/')?>css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Datatables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets')?>/css/jquery.dataTables.css">
 
 
     <script src="<?=base_url('assets/')?>vendor/jquery/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="<?= base_url('assets/js/')?>chart.js"></script>
 
 
 </head>
@@ -250,7 +250,7 @@
     <script src="<?=base_url('assets/')?>js/sb-admin-2.min.js"></script>
 
     <!-- Datatables -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
+    <script type="text/javascript" charset="utf8" src="<?= base_url('assets')?>/js/jquery.dataTables.js">
     </script>
 
 

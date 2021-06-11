@@ -57,6 +57,30 @@ class Admin extends CI_Controller {
         
         
     }
+    public function pembatalan()
+    {
+        $data = [
+            'id_transaksi' => $this->input->post('id'),
+            'date_now' => $this->input->post('date'),
+            'status' => $this->input->post('status')
+        ];
+        $this->db->insert('tb_pengerjaan', $data);
+        $id_rumah = $this->input->post('rumah');
+        $queryAnggaran = $this->db->query("SELECT * FROM tb_anggaran WHERE id_rumah = $id_rumah")->result_array();
+        $queryBahan = $this->db->query("SELECT * FROM tb_bahan")->result_array();
+        $bahan = array();
+        for ($i=0; $i < count($queryAnggaran); $i++) { 
+            $bahan[] = array(
+                'id_bahan' => $queryBahan[$i]['id_bahan'],
+                'stok' => $queryBahan[$i]['stok'] + $queryAnggaran[$i]['jumlah'],
+
+            );
+        }
+        $this->db->update_batch('tb_bahan',$bahan,'id_bahan');
+        $this->session->set_flashdata('message', '<div role="alert" class="alert alert-success">Pembangunan di batalkan !</div>');
+        
+        redirect('admin/proyek');
+    }
     public function password()
     {
         $data['title'] = 'Change Password';

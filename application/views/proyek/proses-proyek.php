@@ -1,4 +1,3 @@
-
 <?php
 echo $this->session->flashdata('message');
 
@@ -163,6 +162,7 @@ foreach ($queryTransaksi as $tq ) {
             </form>
             <?php else:?>
             <form action="<?= base_url('admin/pembatalan')?>" method="post">
+                <input type="hidden" name="id_pengerjaan" value="<?= $queryPengerjaan['id_pengerjaan']?>">
                 <input type="hidden" name="id" value="<?= $qtbi['id']?>">
                 <input type="hidden" name="date" value="<?= $now?>">
                 <input type="hidden" name="status" value="1">

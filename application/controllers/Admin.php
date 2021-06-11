@@ -59,12 +59,11 @@ class Admin extends CI_Controller {
     }
     public function pembatalan()
     {
-        $data = [
-            'id_transaksi' => $this->input->post('id'),
-            'date_now' => $this->input->post('date'),
-            'status' => $this->input->post('status')
-        ];
-        $this->db->insert('tb_pengerjaan', $data);
+        
+        $id_pengerjaan = $this->input->post('id_pengerjaan');
+        $this->db->where('id_pengerjaan',$id_pengerjaan);
+        $this->db->delete('tb_pengerjaan');
+
         $id_rumah = $this->input->post('rumah');
         $queryAnggaran = $this->db->query("SELECT * FROM tb_anggaran WHERE id_rumah = $id_rumah")->result_array();
         $queryBahan = $this->db->query("SELECT * FROM tb_bahan")->result_array();
@@ -77,6 +76,7 @@ class Admin extends CI_Controller {
             );
         }
         $this->db->update_batch('tb_bahan',$bahan,'id_bahan');
+        
         $this->session->set_flashdata('message', '<div role="alert" class="alert alert-success">Pembangunan di batalkan !</div>');
         
         redirect('admin/proyek');

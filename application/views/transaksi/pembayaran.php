@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Jenis</label>
                         <select class="form-control" id="exampleFormControlSelect1" name="rumah" required>
-                        <option value="" selected>Tanah</option>
+                            <option value="" selected>Tanah</option>
                             <?php
                             foreach ($type_rumah as $tp ) {
                                 echo '<option  value="'.$tp['id_rumah'].'">Rumah type '.$tp['type_rumah'].'</option>';
@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label for="harga">Harga</label>
-                        <input type="text" class="form-control" name="harga" required>
+                        <input type="text" class="form-control uang" name="harga" required>
                     </div>
 
                     <input type="submit" class="btn btn-primary" value="Save">
@@ -70,7 +70,7 @@
                             <th>Unit</th>
                             <th>Harga</th>
                             <th>Tanggal</th>
-                            
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,7 +83,69 @@
                             echo '<td>'.$t['unit'].'</td>';
                             echo '<td>'.$t['biaya'].'</td>';
                             echo '<td>'.$t['date_created'].'</td>';
+							echo '<td><a href="#" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit'.$t['id'].'">Edit</a></td>';
                             echo '</tr>';
+							echo '<div class="modal fade" id="edit'.$t['id'].'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<form action="'.base_url('transaksi/edit/').$t['id'].'" method="post">
+									<div class="modal-content">
+										<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Edit Data</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										</div>
+										<div class="modal-body">
+											<div class="form-group">
+												<label for="nama" class="form-label">Nama Pembeli</label>
+												<input name="nama" type="text" class="form-control" value="'.$t['nama_pembeli'].'">
+											</div>
+											<div class="form-group">
+												<label for="unit" class="form-label">Unit</label>
+												<input name="unit" type="text" class="form-control" value="'.$t['unit'].'">
+											</div>
+											<div class="form-group">
+												<label for="exampleFormControlSelect1">Plan</label>
+												<select class="form-control" id="exampleFormControlSelect1" name="plan" required>
+													';
+													foreach ($plan as $p ) {
+														echo '<option  value="'.$p['id_plan'].'"';
+														if($p['id_plan'] == $t['id_plan']) echo 'selected';
+														echo '>Rumah type '.$p['nama_plan'].'</option>';
+													}
+													echo '
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="exampleFormControlSelect1">Jenis</label>
+												<select class="form-control" id="exampleFormControlSelect1" name="rumah" required>
+													<option value="">Tanah</option>';
+												
+													foreach ($type_rumah as $tp ) {
+														echo '<option  value="'.$tp['id_rumah'].'"';
+														if($tp['id_rumah'] == $t['id_rumah']) echo 'selected';
+														echo '>Rumah type '.$tp['type_rumah'].'</option>';
+													}
+													echo '
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="harga" class="form-label">Harga</label>
+												<input name="biaya" type="text" class="form-control uang" value="'.$t['biaya'].'">
+											</div>
+											<div class="form-group">
+												<label for="tanggal" class="form-label">Tanggal</label>
+												<input name="date" type="date" class="form-control" value="'.$t['date_created'].'">
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Save changes</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						  </div>';
                             $no++;
                         }
                         ?>
@@ -93,3 +155,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+	    // Format mata uang.
+	    $( '.uang' ).mask('0.000.000.000', {reverse: true});
+	})
+</script>

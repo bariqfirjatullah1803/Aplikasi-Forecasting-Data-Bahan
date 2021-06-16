@@ -25,6 +25,7 @@
 
 
     <script src="<?=base_url('assets/')?>vendor/jquery/jquery.min.js"></script>
+    <script src="<?= base_url('assets/js/')?>jquery.mask.min.js"></script>
     <script src="<?= base_url('assets/js/')?>chart.js"></script>
 
 
@@ -273,6 +274,13 @@
     }
     </script>
     <script>
+    $(document).ready(function() {
+        $('#pengerjaan').DataTable({
+            "order": [
+                [3, "desc"]
+            ]
+        });
+    });
     $(document).ready(function() {
         $('.forecast').DataTable({
             "lengthMenu": [

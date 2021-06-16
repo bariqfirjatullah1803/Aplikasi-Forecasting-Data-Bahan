@@ -31,12 +31,7 @@
         $tbb[$bb][$yy][$mm] += $total;
 
     }
-    if($ft){
-
-        $ft;
-    }else{
-        $ft = $tahunawal;
-    }
+	$ft = $tahunakhir;
     if($bh){
 
     }else{
@@ -49,7 +44,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-10">
-                <form action="<?= base_url('forecast')?>" method="post">
+                <!-- <form action="<?= base_url('forecast')?>" method="post">
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group row">
@@ -69,7 +64,8 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </form> -->
+				Data Penjualan Tahun <?= $ft?>
             </div>
             <div class="col-2">
                 <form action="<?= base_url('laporan')?>" target="_blank" method="post">

@@ -14,6 +14,12 @@ foreach ($queryTransaksi as $tq ) {
     }
 }?>
 <div class="row">
+    <?php if(empty($pembeli[$now])){
+	$pembeli[$now] = 0;
+}
+if ($pembeli[$now] != 0):
+?>
+
     <?php foreach ($pembeli[$now] as $p ):?>
     <?php
         $idp = $p['id'];
@@ -35,10 +41,10 @@ foreach ($queryTransaksi as $tq ) {
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="id_transaksi" class="form-label">No Transaksi <a data-toggle="modal"
+                    <label for="id_transaksi" class="form-label">Atas Nama <a data-toggle="modal"
                             data-target="#Detail<?= $qtbi['id']?>" href="#" class="badge badge-info badge-pill"><i
                                 class="fas fa-eye"></i></a></label>
-                    <input type="text" class="form-control" value="<?= $qtbi['id_transaksi']?>" readonly>
+                    <input type="text" class="form-control" value="<?= $qtbi['nama_pembeli']?>" readonly>
                 </div>
                 <!-- Modal -->
                 <div class="modal fade" id="Detail<?= $qtbi['id']?>" tabindex="-1"
@@ -94,7 +100,7 @@ foreach ($queryTransaksi as $tq ) {
                                             value="<?= $qtbi['date_created']?>" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <!-- <div class="form-group row">
                                     <label for="" class="col-sm-2 col-form-label">Pengerjaan</label>
                                     <div class="col-sm-10">
                                         <?php
@@ -112,7 +118,7 @@ foreach ($queryTransaksi as $tq ) {
                                                 aria-valuemax="100"><?= $persenPengerjaan?>%</div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -124,7 +130,7 @@ foreach ($queryTransaksi as $tq ) {
                     $idRumah = $qtbi['id_rumah'];
                     $queryAnggaran = $this->db->query("SELECT * FROM tb_anggaran INNER JOIN tb_bahan ON tb_bahan.id_bahan = tb_anggaran.id_bahan WHERE tb_anggaran.id_rumah = $idRumah")->result_array();
                 ?>
-                <table class="table table-striped">
+                <table class="table table-striped" id="pengerjaan">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -141,24 +147,26 @@ foreach ($queryTransaksi as $tq ) {
                             <td><?= $qa['jumlah'].' '.$qa['satuan']; ?></td>
                             <td><?php 
                             if ($qa['stok'] - $qa['jumlah'] <= 0) {
-                                echo 'Bahan Kurang';
+                                echo '<span class="badge badge-danger">Bahan Kurang</span>';
                                 $status[$no]['nama_bahan'] = $qa['nama_bahan'];
                                 $status[$no]['status'] = 'Bahan Kurang';
                             }else{
-                                echo 'Bahan Cukup';
+                                echo '<span class="badge badge-success">Bahan Cukup</span>';
                             }?></td>
                         </tr>
                         <?php $no++; endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php if ($status = null || empty($queryPengerjaan)):?>
+            <!-- <?= print_r($status)?> -->
+            <?php if(empty($queryPengerjaan)):?>
             <form action="<?= base_url('admin/pengerjaan')?>" method="post">
                 <input type="hidden" name="id" value="<?= $qtbi['id']?>">
                 <input type="hidden" name="date" value="<?= $now?>">
                 <input type="hidden" name="status" value="1">
                 <input type="hidden" name="rumah" value="<?= $qtbi['id_rumah']?>">
-                <button type="submit" class="btn btn-primary btn-block">Kerjakan</button>
+                <button type="submit" class="btn btn-primary btn-block"
+                    <?php if ($status != null){echo 'disabled';}?>>Kerjakan</button>
             </form>
             <?php else:?>
             <form action="<?= base_url('admin/pembatalan')?>" method="post">
@@ -173,5 +181,11 @@ foreach ($queryTransaksi as $tq ) {
         </div>
     </div>
     <?php endforeach;?>
-    <?php endforeach?>
+    <?php endforeach;?>
 </div>
+<?php else:?>
+</div>
+<div class="alert alert-info" role="alert">
+    Tidak ada pembangunan !
+</div>
+<?php endif?>

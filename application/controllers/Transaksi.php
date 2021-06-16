@@ -43,13 +43,13 @@ class Transaksi extends CI_Controller
 
         }
         $na = 1;
-        foreach ($stok as $s) {
-            if ($stok[$na] < 0) {
-                $nama_bahan[] = $this->db->query("SELECT nama_bahan FROM tb_bahan WHERE id_bahan = $na")->row_array();
-            }
-            $na++;
-        }
-        if (empty($nama_bahan)) {
+        // foreach ($stok as $s) {
+        //     if ($stok[$na] < 0) {
+        //         $nama_bahan[] = $this->db->query("SELECT nama_bahan FROM tb_bahan WHERE id_bahan = $na")->row_array();
+        //     }
+        //     $na++;
+        // }
+        // if (empty($nama_bahan)) {
             // var_dump(count($stok));
             // die;
             for ($n=1; $n <= count($stok); $n++) { 
@@ -77,22 +77,38 @@ class Transaksi extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan !</div>');
             redirect('transaksi');
 
-        } else {
-            $no = 0;
-            $msg = '';
-            foreach ($nama_bahan as $nb) {
-                $msg .= $nama_bahan[$no]['nama_bahan'] . ' , ';
-                $no++;
-            }
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" style="text-transform:lowercase" role="alert"><span style="text-transform:capitalize">Bahan : </span> ' . substr($msg, 0, -1) . ' Kurang !</div>');
+        // } else {
+        //     $no = 0;
+        //     $msg = '';
+        //     foreach ($nama_bahan as $nb) {
+        //         $msg .= $nama_bahan[$no]['nama_bahan'] . ' , ';
+        //         $no++;
+        //     }
+        //     $this->session->set_flashdata('message', '<div class="alert alert-danger" style="text-transform:lowercase" role="alert"><span style="text-transform:capitalize">Bahan : </span> ' . substr($msg, 0, -1) . ' Kurang !</div>');
 
-            redirect('bahan/stok');
+        //     redirect('bahan/stok');
 
-        }
+        // }
 
         // redirect('transaksi','refresh');
 
     }
+	public function edit($id)
+	{
+		$data = [
+			'nama_pembeli' => $this->input->post('nama'), 
+			'unit' => $this->input->post('unit'), 
+			'id_plan' => $this->input->post('plan'), 
+			'biaya' => $this->input->post('biaya'), 
+			'id_rumah' => $this->input->post('rumah'), 
+			'date_created' => $this->input->post('date'), 
+		];
+		$this->db->where('id', $id);
+		$this->db->update('tb_transaksi', $data);
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diubah !</div>');
+		redirect('transaksi');
+		
+	}
 
 }
 

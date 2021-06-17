@@ -38,6 +38,7 @@ class Forecast extends CI_Controller
     {
         $tahun = $this->input->post('tahun');
         $bahan = $this->input->post('bahan');
+        $data['ft'] = $tahun;
         $data['bh'] = $bahan;
         $data['title'] = 'Forecast';
         $data['user'] = $this->model_user->getUser();

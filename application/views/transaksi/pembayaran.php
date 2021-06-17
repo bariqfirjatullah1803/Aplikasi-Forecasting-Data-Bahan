@@ -83,7 +83,10 @@
                             echo '<td>'.$t['unit'].'</td>';
                             echo '<td>'.$t['biaya'].'</td>';
                             echo '<td>'.$t['date_created'].'</td>';
-							echo '<td><a href="#" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit'.$t['id'].'">Edit</a></td>';
+							echo '<td>
+							<a href="#" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit'.$t['id'].'">Edit</a>
+							<a href="'.base_url('transaksi/delete/').$t['id'].'" onclick="return confirm(`Apakah anda yakin akan menghapus data ini ?`);" class="btn btn-danger btn-sm">Delete</a>
+							</td>';
                             echo '</tr>';
 							echo '<div class="modal fade" id="edit'.$t['id'].'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog">

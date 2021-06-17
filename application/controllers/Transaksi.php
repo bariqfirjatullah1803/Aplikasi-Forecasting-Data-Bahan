@@ -109,6 +109,13 @@ class Transaksi extends CI_Controller
 		redirect('transaksi');
 		
 	}
+	public function delete($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('tb_transaksi');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus !</div>');
+		redirect('transaksi');
+	}
 
 }
 

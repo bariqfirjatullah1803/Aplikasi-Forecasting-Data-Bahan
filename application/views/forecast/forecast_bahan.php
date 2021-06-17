@@ -31,6 +31,11 @@
         $tbb[$bb][$yy][$mm] += $total;
 
     }
+    // if($ft){
+
+    //     $ft;
+    // }else{
+	// }
 	$ft = $tahunakhir;
     if($bh){
 
@@ -65,7 +70,7 @@
                         </div>
                     </div>
                 </form> -->
-				Data Penjualan Tahun <?= $ft?>
+				Data Bahan Tahun <?= $ft?>
             </div>
             <div class="col-2">
                 <form action="<?= base_url('laporan')?>" target="_blank" method="post">
@@ -186,7 +191,11 @@
                         // echo 'Y = '.$a.' + '.$b.' x '.$x.'<br>';
                         // echo 'Y = '.$fy.'<br>';
                         ?>
+						<?php if ($fy >= 0 ):?>
                     <td><?= round($fy).' '.$bh['satuan']?></td>
+						<?php else:?>
+						<td>0<?= $bh['satuan']?></td>
+						<?php endif?>
                     <?php
                         $fxy = $fy*$x;
                         $fxx = $x*$x;

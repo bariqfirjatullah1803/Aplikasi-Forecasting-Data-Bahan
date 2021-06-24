@@ -83,6 +83,8 @@ $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
             </tbody>
         </table>
     </div>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHitung"
+        aria-expanded="false" aria-controls="collapseHitung">Proses Hitung</button>
 </div>
 <?php
     $a = $sigmaY / $n;
@@ -94,6 +96,16 @@ $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
     $arrY .= "$fy".", ";
     // echo $fy;
 ?>
+<div class="collapse" id="collapseHitung">
+    <div class="card card-body">
+        a = <?= $sigmaY?> / <?= $n?><br>
+        a = <?= $a ?><br>
+        b = <?= $sigmaXY?> / <?= $sigmaXX?><br>
+        b = <?= $b?><br>
+        Y' = <?= $a ?> + <?= $b ?> * <?= $fx?><br>
+        Y' = <?= $fy?>
+    </div>
+</div>
 <div class="card mt-3">
     <div class="card-header">
         Forecast

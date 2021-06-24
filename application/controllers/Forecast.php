@@ -23,6 +23,7 @@ class Forecast extends CI_Controller
 
     public function forecast()
     {
+
         $tahun = $this->input->post('tahun');
         $bahan = $this->input->post('bahan');
         $data['ft'] = $tahun;
@@ -40,6 +41,17 @@ class Forecast extends CI_Controller
         $bahan = $this->input->post('bahan');
         $data['ft'] = $tahun;
         $data['bh'] = $bahan;
+		// $bahan = '';
+		$bahan = $this->input->post('bahan');
+		if ($bahan) {
+			$bahan;
+		}else{
+			$bahan = 1;
+		}
+		$data['date1'] = $this->input->post('date1');
+		$data['date2'] = $this->input->post('date2');
+		$data['bahanById'] = $this->db->query("SELECT * FROM tb_bahan WHERE id_bahan = $bahan")->row_array();
+		$data['transaksiById'] = $this->db->query("SELECT * FROM tb_transaksi INNER JOIN tb_plan ON tb_transaksi.id_plan = tb_plan.id_plan INNER JOIN tb_rumah ON tb_rumah.id_rumah = tb_transaksi.id_rumah INNER JOIN tb_anggaran ON tb_anggaran.id_rumah = tb_rumah.id_rumah INNER JOIN tb_bahan ON tb_bahan.id_bahan = tb_anggaran.id_bahan WHERE tb_bahan.id_bahan = $bahan")->result_array();
         $data['title'] = 'Forecast';
         $data['user'] = $this->model_user->getUser();
         $data['transaksi'] = $this->model_forecast->getAll();

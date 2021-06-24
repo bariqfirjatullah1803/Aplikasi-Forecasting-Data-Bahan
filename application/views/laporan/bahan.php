@@ -57,7 +57,7 @@
 					$tt = date("Y-m-d",strtotime('+'.$i.' Days',strtotime($date1)));
 					echo '<tr>';
 					echo '<td>'.$tt.'</td>';
-					echo '<td>'.round($arrayTgl[$tt]).' '.$bahan['satuan'].'</td>';
+					echo '<td>'.$arrayTgl[$tt].' '.$bahan['satuan'].'</td>';
 					echo '</tr>';
 				}
 				// echo $arrayTgl['2021-08-15'];

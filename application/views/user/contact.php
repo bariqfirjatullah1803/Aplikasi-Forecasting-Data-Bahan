@@ -7,7 +7,7 @@
           <div class="col-md-12 col-lg-8">
             <div class="title-single-box">
               <h1 class="title-single">Contact US</h1>
-              <span class="color-text-a">Aut voluptas consequatur unde sed omnis ex placeat quis eos. Aut natus officia corrupti qui autem fugit consectetur quo. Et ipsum eveniet laboriosam voluptas beatae possimus qui ducimus. Et voluptatem deleniti. Voluptatum voluptatibus amet. Et esse sed omnis inventore hic culpa.</span>
+              <span class="color-text-a"><a href="https://wa.me/085791556764"><i class="bi bi-whatsapp"></i> 085791556764</a></span>
             </div>
           </div>
           <div class="col-md-12 col-lg-4">
@@ -33,11 +33,11 @@
           <div class="col-sm-12">
             <div class="contact-map box">
               <div id="map" class="contact-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes+Square!5e0!3m2!1ses-419!2sve!4v1510329142834" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d246.87636113186355!2d112.6081499218629!3d-8.09926095469946!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1624289244312!5m2!1sid!2sid" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
               </div>
             </div>
           </div>
-          <div class="col-sm-12 section-t8">
+         <!--  <div class="col-sm-12 section-t8">
             <div class="row">
               <div class="col-md-7">
                 <form action="forms/contact.php" method="post" role="form" class="php-email-form">
@@ -149,10 +149,11 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
-    </section><!-- End Contact Single-->
+    </section>
+    <!-- End Contact Single-->
 
   </main><!-- End #main -->
 

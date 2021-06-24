@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>EstateAgency Bootstrap Template - <?= $title; ?></title>
+    <title>PT Taniya Multi Properti - <?= $title; ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -140,13 +140,13 @@
                 <span></span>
                 <span></span>
             </button>
-            <a class="navbar-brand text-brand" href="<?= base_url('user')?>">Estate<span class="color-b">Agency</span></a>
+            <a class="navbar-brand text-brand" href="<?= base_url('user')?>">PT. Taniya <span class="color-b">Multi Properti</span></a>
 
             <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="<?= base_url('user')?>">Home</a>
+                        <a class="nav-link " href="<?= base_url('user')?>">Home</a>
                     </li>
 
                     <li class="nav-item">
@@ -157,11 +157,11 @@
                         <a class="nav-link " href="<?= base_url('user/')?>property_grid">Property</a>
                     </li>
 
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link " href="<?= base_url('user/')?>blog_grid">Blog</a>
-                    </li>
+                    </li> -->
 
-                    <li class="nav-item dropdown">
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                         <div class="dropdown-menu">
@@ -170,6 +170,9 @@
                             <a class="dropdown-item " href="<?= base_url('user/')?>agents_grid">Agents Grid</a>
                             <a class="dropdown-item " href="<?= base_url('user/')?>agent_single">Agent Single</a>
                         </div>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link " href="<?= base_url('user/')?>site_plan">Site Plan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="<?= base_url('user/')?>contact">Contact</a>
@@ -177,10 +180,10 @@
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
+            <!-- <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
                 <i class="bi bi-search"></i>
-            </button>
+            </button> -->
 
         </div>
     </nav><!-- End Header/Navbar -->
@@ -194,13 +197,11 @@
                 <div class="col-sm-12 col-md-4">
                     <div class="widget-a">
                         <div class="w-header-a">
-                            <h3 class="w-title-a text-brand">EstateAgency</h3>
+                            <h3 class="w-title-a text-brand">PT. Taniya Multi Properti</h3>
                         </div>
                         <div class="w-body-a">
                             <p class="w-text-a color-text-a">
-                                Enim minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip exea commodo
-                                consequat duis
-                                sed aute irure.
+                               Melayani dengan sepenuh hati.
                             </p>
                         </div>
                         <div class="w-footer-a">
@@ -215,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4 section-md-t3">
+                <!-- <div class="col-sm-12 col-md-4 section-md-t3">
                     <div class="widget-a">
                         <div class="w-header-a">
                             <h3 class="w-title-a text-brand">The Company</h3>
@@ -276,7 +277,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
     <footer>
         <div class="container">
@@ -328,7 +329,7 @@
                     <div class="copyright-footer">
                         <p class="copyright color-text-a">
                             &copy; Copyright
-                            <span class="color-a">EstateAgency</span> All Rights Reserved.
+                            <span class="color-a">PT. Taniya Multi Properti</span> All Rights Reserved.
                         </p>
                     </div>
                     <div class="credits">

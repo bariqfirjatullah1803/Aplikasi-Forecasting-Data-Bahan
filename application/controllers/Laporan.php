@@ -43,6 +43,15 @@ class Laporan extends CI_Controller {
         $this->load->view('laporan/forecast_penjualan', $data);
         
     }
+	public function bahan()
+	{
+		$bahan = $this->input->post('bahan');
+		$data['date1'] = $this->input->post('date1');
+		$data['date2'] = $this->input->post('date2');
+		$data['bahan'] = $this->db->query("SELECT * FROM tb_bahan WHERE id_bahan = $bahan")->row_array();
+		$data['transaksi'] = $this->db->query("SELECT * FROM tb_transaksi INNER JOIN tb_plan ON tb_transaksi.id_plan = tb_plan.id_plan INNER JOIN tb_rumah ON tb_rumah.id_rumah = tb_transaksi.id_rumah INNER JOIN tb_anggaran ON tb_anggaran.id_rumah = tb_rumah.id_rumah INNER JOIN tb_bahan ON tb_bahan.id_bahan = tb_anggaran.id_bahan WHERE tb_bahan.id_bahan = $bahan")->result_array();
+		$this->load->view('laporan/bahan',$data);
+	}
 }
 
 /* End of file Laporan.php */

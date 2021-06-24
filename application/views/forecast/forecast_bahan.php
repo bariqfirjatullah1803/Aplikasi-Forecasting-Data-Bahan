@@ -4,6 +4,8 @@
     $qtahunakhir = $this->db->query("SELECT MAX(date_created) AS tahunakhir FROM tb_transaksi")->row_array();
     $tahunawal = date("Y",strtotime($qtahunawal['tahunawal']));
     $tahunakhir = date("Y",strtotime("+10 Weeks",strtotime($qtahunakhir['tahunakhir'])));
+	$minTanggal = date("Y-m-d",strtotime($qtahunawal['tahunawal']));
+    $maxTanggal = date("Y-m-d",strtotime("+10 Weeks",strtotime($qtahunakhir['tahunakhir'])));
 
     for ($j=1; $j <= count($bahan); $j++) { 
         for ($t=$tahunawal; $t <= $tahunakhir; $t++) { 
@@ -74,39 +76,52 @@
                 <!-- Data Bahan Tahun <?= $ft?> -->
             </div>
             <div class="col-2">
-                <!-- <button class="btn btn-danger btn-block" type="button" data-toggle="collapse"
+                <button class="btn btn-danger btn-block" type="button" data-toggle="collapse"
                     data-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan"><i
-                        class="fas fa-print"></i>Laporan</button> -->
-                <form action="<?= base_url('laporan')?>" target="_blank" method="post">
+                        class="fas fa-print"></i>Laporan</button>
+                <!-- <form action="<?= base_url('laporan')?>" target="_blank" method="post">
                     <input type="hidden" value="<?= $ft?>" name="tahun">
                     <button type="submit" class="btn btn-danger"><i class="fas fa-print"></i> Cetak Laporan</button>
-                </form>
+                </form> -->
             </div>
         </div>
     </div>
     <div class="card-body" style="overflow-x: scroll">
-        <!-- <div class="collapse" id="collapseLaporan">
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label for="bahan" class="col-sm-3 col-form-label">Bahan</label>
-                        <select name="bahan" class="form-control col-sm-9" id="exampleFormControlSelect1">
-                            <?php foreach($bahan as $item):?>
-                            <option value="<?= $item['id_bahan']?>">
-                                <?= $item['nama_bahan']?>
-                            </option>
-                            <?php endforeach?>
-                        </select>
+        <div class="collapse" id="collapseLaporan">
+            <form action="<?= base_url('laporan/bahan')?>" target="_blank" method="post" class="mb-3">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for="bahan" class="col-sm-4 col-form-label">Bahan</label>
+                            <select name="bahan" class="form-control col-sm-8" id="exampleFormControlSelect1">
+                                <?php foreach($bahan as $item):?>
+                                <option value="<?= $item['id_bahan']?>">
+                                    <?= $item['nama_bahan']?>
+                                </option>
+                                <?php endforeach?>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label for="startDate" class="col-sm-3 col-form-label">Tanggal Mulai</label>
-                        <input type="date" class="form-control col-sm-9">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for="startDate" class="col-sm-4 col-form-label">Tanggal Mulai</label>
+                            <input name="date1" type="date" class="form-control col-sm-8" min="<?= $minTanggal?>"
+                                max="<?= $maxTanggal?>" value="<?= $minTanggal?>">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for="startDate" class="col-sm-4 col-form-label">Sampai Tanggal</label>
+                            <input name="date2" type="date" class="form-control col-sm-8" min="<?= $minTanggal?>"
+                                max="<?= $maxTanggal?>"value="<?= $maxTanggal?>">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div> -->
+                <input type="submit" class="btn btn-primary btn-block" value="Print">
+            </form>
+        </div>
         <table class="table table-striped forecast text-center ">
             <thead>
                 <tr>

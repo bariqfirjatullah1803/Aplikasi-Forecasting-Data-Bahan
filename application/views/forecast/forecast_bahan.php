@@ -16,8 +16,9 @@
             }
         }
     }
+	$arrayBulan=['Januari','Febuari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 ?>
- 
+
 <?php foreach ($transaksi as $trns ) :?>
 
 <?php
@@ -31,12 +32,12 @@
         $tbb[$bb][$yy][$mm] += $total;
 
     }
-    // if($ft){
+    if($ft){
 
-    //     $ft;
-    // }else{
-	// }
-	$ft = $tahunakhir;
+        $ft;
+    }else{
+		$ft = $tahunawal;
+	}
     if($bh){
 
     }else{
@@ -49,7 +50,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-10">
-                <!-- <form action="<?= base_url('forecast')?>" method="post">
+                <form action="<?= base_url('forecast')?>" method="post">
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group row">
@@ -69,10 +70,13 @@
                             </div>
                         </div>
                     </div>
-                </form> -->
-				Data Bahan Tahun <?= $ft?>
+                </form>
+                <!-- Data Bahan Tahun <?= $ft?> -->
             </div>
             <div class="col-2">
+                <!-- <button class="btn btn-danger btn-block" type="button" data-toggle="collapse"
+                    data-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan"><i
+                        class="fas fa-print"></i>Laporan</button> -->
                 <form action="<?= base_url('laporan')?>" target="_blank" method="post">
                     <input type="hidden" value="<?= $ft?>" name="tahun">
                     <button type="submit" class="btn btn-danger"><i class="fas fa-print"></i> Cetak Laporan</button>
@@ -81,14 +85,36 @@
         </div>
     </div>
     <div class="card-body" style="overflow-x: scroll">
+        <!-- <div class="collapse" id="collapseLaporan">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group row">
+                        <label for="bahan" class="col-sm-3 col-form-label">Bahan</label>
+                        <select name="bahan" class="form-control col-sm-9" id="exampleFormControlSelect1">
+                            <?php foreach($bahan as $item):?>
+                            <option value="<?= $item['id_bahan']?>">
+                                <?= $item['nama_bahan']?>
+                            </option>
+                            <?php endforeach?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group row">
+                        <label for="startDate" class="col-sm-3 col-form-label">Tanggal Mulai</label>
+                        <input type="date" class="form-control col-sm-9">
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <table class="table table-striped forecast text-center ">
             <thead>
                 <tr>
                     <th scope="col" style="display:none">#</th>
                     <th scope="col">Nama Bahan</th>
-                    <?php $arrp=''; foreach($periode as $p):?>
-                    <th scope="col"><?= $p?></th>
-                    <?php $arrp .= "'$p'". ", ";  endforeach?>
+                    <?php $arrp=''; foreach($arrayBulan as $ab):?>
+                    <th scope="col"><?= $ab?></th>
+                    <?php $arrp .= "'$ab'". ", ";  endforeach?>
                 </tr>
             </thead>
             <tbody>
@@ -147,9 +173,9 @@
                 <tr>
                     <th scope="col" style="display:none">#</th>
                     <th scope="col">Nama Bahan</th>
-                    <?php $cp = count($periode)+1; foreach($periode as $p):?>
-                    <th scope="col">Periode <?= $cp?></th>
-                    <?php $arrp .= "'Periode $cp'". ", "; $cp++; endforeach?>
+                    <?php foreach($arrayBulan as $ab):?>
+                    <th scope="col"><?= $ab?></th>
+                    <?php endforeach?>
                     <!-- <th scope="col">Jumlah Bahan</th> -->
                 </tr>
             </thead>
@@ -157,6 +183,7 @@
                 <?php 
                 $fnumber = 1; 
                 $arbahan = '';
+				$fn = 0;
                 
                 $sy2 = '';
                 foreach ($bahan as $bh ) :?>
@@ -172,30 +199,30 @@
                     $nbh = $bh['id_bahan'];
                     $x = $nilwal;
                     $n =  count($periode);
-                    $fp = $n + 1;
+                    $fp = 0;
                     $fsy = $sigmaY[$nbh];
                     $fsxy = $sigmaXY[$nbh];
                     $fsxx = $sigmaXX[$nbh];
-                    $fn = 1;
                     $tfsy = 0;
-                    foreach ($periode as $p ) {
+					$arrayForecast[$fn]['nama_bahan'] = $nbahan;
+                    foreach ($arrayBulan as $ab ) {
                         
                         $a = $fsy/$n;
                         $b = $fsxy/$fsxx;
                         $fy = $a+$b*$x;
-                        // echo 'Periode '.$fp.'<br>';
-                        // echo 'a = '.$fsy.'/'.$n.'<br>';
-                        // echo 'a = '.$a.'<br>';
-                        // echo 'b = '.$fsxy.'/'.$fsxx.'<br>';
-                        // echo 'b = '.$b.'<br>';
-                        // echo 'Y = '.$a.' + '.$b.' x '.$x.'<br>';
-                        // echo 'Y = '.$fy.'<br>';
+                        $arrayForecast[$fn]['bulan'][$fp] = $ab;
+                        $arrayForecast[$fn]['a'][$fp] = 'a = '.$fsy.'/'.$n;
+                        $arrayForecast[$fn]['hasilA'][$fp] = 'a = '.$a;
+                        $arrayForecast[$fn]['b'][$fp]='b = '.$fsxy.'/'.$fsxx;
+                        $arrayForecast[$fn]['hasilB'][$fp] = 'b = '.$b;
+                        $arrayForecast[$fn]['Y'][$fp] = 'Y = '.$a.' + '.$b.' x '.$x;
+                        $arrayForecast[$fn]['hasilY'][$fp] = 'Y = '.$fy;
                         ?>
-						<?php if ($fy >= 0 ):?>
+                    <?php if ($fy >= 0 ):?>
                     <td><?= round($fy).' '.$bh['satuan']?></td>
-						<?php else:?>
-						<td>0<?= $bh['satuan']?></td>
-						<?php endif?>
+                    <?php else:?>
+                    <td>0<?= $bh['satuan']?></td>
+                    <?php endif?>
                     <?php
                         $fxy = $fy*$x;
                         $fxx = $x*$x;
@@ -207,19 +234,36 @@
                         $fsxy += $fxy;
                         $fsxx += $fxx;
                        
-                        $fn++;
+                        
                     }
                     $sigY2 = round($tfsy);
                         $sy2 .= "$sigY2". ", ";
                     // echo $sigY2.'<br>';
                    ?>
                 </tr>
-                <?php $fnumber++; endforeach;?>
+                <?php $fn++;$fnumber++; endforeach;?>
             </tbody>
         </table>
     </div>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHitung"
+        aria-expanded="false" aria-controls="collapseHitung">Proses Hitung</button>
+    <div class="collapse" id="collapseHitung">
+        <div class="card card-body">
+            <?php 
+			echo $arrayForecast[0]['nama_bahan'].'<br>';
+			for ($i=0; $i < 12; $i++) { 
+				echo $arrayForecast[0]['bulan'][$i].'<br>';
+				echo $arrayForecast[0]['a'][$i].'<br>';
+				echo $arrayForecast[0]['hasilA'][$i].'<br>';
+				echo $arrayForecast[0]['b'][$i].'<br>';
+				echo $arrayForecast[0]['hasilB'][$i].'<br>';
+				echo $arrayForecast[0]['Y'][$i].'<br>';
+				echo $arrayForecast[0]['hasilY'][$i].'<br>';
+			}
+			?>
+        </div>
+    </div>
 </div>
-<!-- <?= $sy2?> -->
 <div class="card mt-3">
     <div class="card-header">Grafik</div>
     <div class="card-body">
@@ -227,7 +271,6 @@
 
     </div>
 </div>
-
 <script>
 var ctx = document.getElementById('myChart');
 // const labels = [<?= $arrp?>];

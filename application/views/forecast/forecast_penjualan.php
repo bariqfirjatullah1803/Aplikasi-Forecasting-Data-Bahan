@@ -26,44 +26,41 @@ if($gg == 1){
 $n = count($tahun);
 $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
 ?>
-<div class="card">
-    <div class="card-header">
-        <div class="row">
-            <div class="col-10">
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
                 Data Penjualan Rumah Per Tahun
-            </div>
-            <div class="col-2">
-                <form action="<?= base_url('laporan/penjualan')?>" target="_blank" method="post">
-                    <button type="submit" class="btn btn-danger"><i class="fas fa-print"></i> Cetak Laporan</button>
+                <form action="<?= base_url('laporan/penjualan')?>" style="float:right" target="_blank" method="post">
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-print"></i> Cetak
+                        Laporan</button>
                 </form>
             </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <table class="table table-striped forecast text-center">
-            <thead>
-                <tr>
-                    <th class="d-none">#</th>
-                    <th>Tahun</th>
-                    <th>Total Penjualan</th>
-                    <th>X</th>
-                    <th>XY</th>
-                    <th>XX</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $arrtahun = ''; $arrY = ''; $no = 1; foreach($tahun as $thn):?>
-                <tr>
-                    <td class="d-none"><?= $no ?></td>
-                    <td><?= $thn ?></td>
-                    <?php $arrtahun .= "$thn". ", ";?>
-                    <td><?= $y=$total_penjualan[$thn]?></td>
-                    <?php $arrY .= "$y".", ";?>
-                    <td><?= $x=$na ?></td>
-                    <td><?= $xy=$x*$y ?></td>
-                    <td><?= $xx=$x*$x ?></td>
-                </tr>
-                <?php 
+            <div class="card-body">
+                <table class="table table-striped forecast text-center">
+                    <thead>
+                        <tr>
+                            <th class="d-none">#</th>
+                            <th>Tahun</th>
+                            <th>Total Penjualan</th>
+                            <th>X</th>
+                            <th>XY</th>
+                            <th>XX</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $arrtahun = ''; $arrY = ''; $no = 1; foreach($tahun as $thn):?>
+                        <tr>
+                            <td class="d-none"><?= $no ?></td>
+                            <td><?= $thn ?></td>
+                            <?php $arrtahun .= "$thn". ", ";?>
+                            <td><?= $y=$total_penjualan[$thn]?></td>
+                            <?php $arrY .= "$y".", ";?>
+                            <td><?= $x=$na ?></td>
+                            <td><?= $xy=$x*$y ?></td>
+                            <td><?= $xx=$x*$x ?></td>
+                        </tr>
+                        <?php 
                     $na+=$plus; 
                     $no++;
                     $sigmaX += $x;
@@ -72,20 +69,51 @@ $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
                     $sigmaXX += $xx; 
                 endforeach;
                 ?>
-                <tr>
-                    <td class="d-none"><?= $no ?></td>
-                    <td>Jumlah</td>
-                    <td><?= $sigmaY ?></td>
-                    <td><?= $sigmaX ?></td>
-                    <td><?= $sigmaXY ?></td>
-                    <td><?= $sigmaXX ?></td>
-                </tr>
-            </tbody>
-        </table>
+                        <tr>
+                            <td class="d-none"><?= $no ?></td>
+                            <td>Jumlah</td>
+                            <td><?= $sigmaY ?></td>
+                            <td><?= $sigmaX ?></td>
+                            <td><?= $sigmaXY ?></td>
+                            <td><?= $sigmaXX ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHitung"
+                aria-expanded="false" aria-controls="collapseHitung">Proses Hitung</button>
+        </div>
     </div>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHitung"
-        aria-expanded="false" aria-controls="collapseHitung">Proses Hitung</button>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                Keuntungan
+            </div>
+			<?php
+				$transaksi = $this->db->query("SELECT YEAR(date_created) as tahun,SUM(biaya) as biaya FROM tb_transaksi GROUP BY YEAR(date_created)")->result_array();
+			?>
+            <div class="card-body">
+                <table class="table table-striped forecast text-center">
+                    <thead>
+						<tr>
+							<th>Tahun</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+                    <tbody>
+						<?php foreach($transaksi as $trans):?>
+						<tr>
+							<td><?= $trans['tahun']?></td>
+							<td><?= $trans['biaya']?></td>
+						</tr>
+						<?php endforeach?>
+					</tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
 <?php
     $a = $sigmaY / $n;
     $b = $sigmaXY/$sigmaXX;

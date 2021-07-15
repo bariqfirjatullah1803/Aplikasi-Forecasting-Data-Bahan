@@ -128,7 +128,16 @@
                     <span>Pembayaran</span>
                 </a>
             </li>
-
+			<hr class="sidebar-divider">
+			<div class="sidebar-heading">
+				Bantuan
+			</div>
+            <li class="nav-item <?php if ($title == 'Panduan') {echo 'active';}?>">
+                <a class="nav-link" href="<?=base_url('bantuan')?>">
+                    <i class="fas fa-fw fa-info"></i>
+                    <span>Panduan Pengguna</span>
+                </a>
+            </li>
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -263,7 +272,7 @@
             id++;
             $(".inputAdd").append(
                 '<div class="input-group mb-3" id="unit-' + id +
-                '"><input type="text" class="form-control" name="unit[]"><div class="input-group-append"><button class="btn btn-primary" onclick="adel(' +
+                '"><input type="number" class="form-control" min="0" max="99" name="unit[]"><div class="input-group-append"><button class="btn btn-primary" onclick="adel(' +
                 id + ')" type="button"><i class="fa fa-minus" id="adel"></i></button></div></div>'
             );
         });

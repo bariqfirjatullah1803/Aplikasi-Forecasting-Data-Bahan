@@ -23,7 +23,8 @@ class Transaksi extends CI_Controller
             'user' => $this->model_user->getUser(),
             'plan' => $this->db->get('tb_plan')->result_array(),
             'type_rumah' => $this->db->get('tb_rumah')->result_array(),
-            'transaksi' => $this->db->get('tb_transaksi')->result_array(),
+			'minDate' => $this->input->post('tanggalAwal'),
+			'maxDate' => $this->input->post('tanggalAkhir')
         ];
         $this->t->load('admin/template', 'transaksi/pembayaran', $data);
     }

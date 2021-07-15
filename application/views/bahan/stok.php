@@ -17,7 +17,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="stok" class="form-label">Jumlah Bahan Datang</label>
-                                <input type="text" name="stok" class="form-control">
+                                <input type="number" min="0" name="stok" class="form-control" required>
                             </div>
                             <input style="float:right" type="submit" class="btn btn-primary" value="Tambah">
                         </form>
@@ -102,6 +102,7 @@
                     <tbody>
                         <?php foreach($bahan AS $b):?>
                         <tr>
+							
                             <td><?= $b['nama_bahan']?></td>
                             <td><?= $b['stok']?></td>
                         </tr>

@@ -68,7 +68,7 @@ class Bahan extends CI_Controller {
     {
         $data = [
             'id_bahan' => $this->input->post('bahan'),
-            'stok' => $this->input->post('stok'),
+            'stok' => intval($this->input->post('stok')),
             'date_created' => date("Y-m-d",time())
         ];
         $this->db->insert('tb_stok', $data);

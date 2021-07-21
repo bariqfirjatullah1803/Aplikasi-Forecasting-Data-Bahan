@@ -28,6 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         Data bahan datang hari ini
+						<a href="<?= base_url('laporan/bahanmasuk')?>" target="_blank" class="btn btn-sm btn-danger" style="float: right;"><i class="fas fa-print"></i> Cetak</a>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">

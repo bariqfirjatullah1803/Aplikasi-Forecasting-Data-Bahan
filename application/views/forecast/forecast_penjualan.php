@@ -88,6 +88,7 @@ $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
         <div class="card">
             <div class="card-header">
                 Keuntungan
+				<a href="<?= base_url('laporan/laba')?>" target="_blank" class="btn btn-sm btn-danger" style="float: right;"><i class="fas fa-print"></i> Cetak Laporan</a>
             </div>
 			<?php
 				$transaksi = $this->db->query("SELECT YEAR(date_created) as tahun,SUM(biaya) as biaya FROM tb_transaksi GROUP BY YEAR(date_created)")->result_array();
@@ -104,7 +105,7 @@ $sigmaY = $sigmaX = $sigmaXY = $sigmaXX = 0;
 						<?php foreach($transaksi as $trans):?>
 						<tr>
 							<td><?= $trans['tahun']?></td>
-							<td><?= $trans['biaya']?></td>
+							<td><?= "Rp " . number_format($trans['biaya'],2,',','.');?></td>
 						</tr>
 						<?php endforeach?>
 					</tbody>

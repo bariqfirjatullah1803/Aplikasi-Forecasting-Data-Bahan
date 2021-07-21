@@ -62,6 +62,19 @@ class Laporan extends CI_Controller {
 		];
 		$this->load->view('laporan/transaksi',$data);
 	}
+	public function laba()
+	{
+		$data['title'] = 'Laporan Laba';
+		$data['transaksi'] = $this->db->query("SELECT YEAR(date_created) as tahun,SUM(biaya) as biaya FROM tb_transaksi GROUP BY YEAR(date_created)")->result_array();
+		$this->load->view('laporan/laba',$data);
+	}
+	public function bahanmasuk()
+	{
+		$timenow = date("Y-m-d",time());
+		$data['title'] = 'Laporan Bahan Masuk '.$timenow;
+        $data['bahan_masuk'] = $this->db->query("SELECT tb_stok.id_stok, tb_stok.date_created, SUM(tb_stok.stok) as stok,tb_bahan.satuan,tb_bahan.nama_bahan FROM tb_stok INNER JOIN tb_bahan ON tb_stok.id_bahan = tb_bahan.id_bahan WHERE tb_stok.date_created = '$timenow' GROUP BY tb_stok.id_bahan")->result_array();
+		$this->load->view('laporan/bahan-masuk',$data);
+	}
 }
 
 /* End of file Laporan.php */

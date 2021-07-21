@@ -350,15 +350,15 @@
         <div class="collapse" id="collapseHitung">
             <div class="card card-body">
                 <?php 
-			echo $arrayForecast[0]['nama_bahan'].'<br>';
-			for ($i=0; $i < 12; $i++) { 
-				echo $arrayForecast[0]['bulan'][$i].'<br>';
-				echo $arrayForecast[0]['a'][$i].'<br>';
-				echo $arrayForecast[0]['hasilA'][$i].'<br>';
-				echo $arrayForecast[0]['b'][$i].'<br>';
-				echo $arrayForecast[0]['hasilB'][$i].'<br>';
-				echo $arrayForecast[0]['Y'][$i].'<br>';
-				echo $arrayForecast[0]['hasilY'][$i].'<br>';
+			echo $arrayForecast[$hitung]['nama_bahan'].'<br>';
+			for ($i=0; $i < 12; $i++) {  
+				echo $arrayForecast[$hitung]['bulan'][$i].'<br>';
+				echo $arrayForecast[$hitung]['a'][$i].'<br>';
+				echo $arrayForecast[$hitung]['hasilA'][$i].'<br>';
+				echo $arrayForecast[$hitung]['b'][$i].'<br>';
+				echo $arrayForecast[$hitung]['hasilB'][$i].'<br>';
+				echo $arrayForecast[$hitung]['Y'][$i].'<br>';
+				echo $arrayForecast[$hitung]['hasilY'][$i].'<br>';
 			}
 			?>
             </div>

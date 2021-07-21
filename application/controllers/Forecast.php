@@ -48,6 +48,7 @@ class Forecast extends CI_Controller
 		}else{
 			$bahan = 1;
 		}
+		$data['hitung'] = $bahan - 1;
 		$data['date1'] = $this->input->post('date1');
 		$data['date2'] = $this->input->post('date2');
 		$data['bahanById'] = $this->db->query("SELECT * FROM tb_bahan WHERE id_bahan = $bahan")->row_array();

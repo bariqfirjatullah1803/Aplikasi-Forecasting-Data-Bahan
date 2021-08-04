@@ -75,8 +75,15 @@ class Forecast extends CI_Controller
     public function penjualan()
     {
         $data['title'] = 'Forecast Penjualan';
+		$minTahun = $this->db->query("SELECT MIN(YEAR(date_created)) as tahun FROM tb_transaksi")->row_array();
+		$tahun = $this->input->post('tahun');
+		if ($tahun) {
+			$data['tahun'] = $this->input->post('tahun');
+		}else {
+			$data['tahun'] = $minTahun['tahun'];
+		}
+		
         $data['user'] = $this->model_user->getUser();
-        $data['minTahun'] = $this->db->query("SELECT MIN(YEAR(date_created)) as tahun FROM tb_transaksi")->row_array();
         $data['maxTahun'] = $this->db->query("SELECT MAX(YEAR(date_created)) as tahun FROM tb_transaksi")->row_array();
         $this->t->load('admin/template','forecast/forecast_penjualan',$data);
     }

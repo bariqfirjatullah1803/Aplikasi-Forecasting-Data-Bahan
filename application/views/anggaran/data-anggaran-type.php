@@ -86,7 +86,7 @@ function isNumberKey(evt) {
                     <td><?=$no?></td>
                     <td><?=$da['type_rumah']?></td>
                     <td><?=$da['nama_bahan']?></td>
-                    <td><?=$da['jumlah']?></td>
+                    <td><?= ceil($da['jumlah'])?></td>
                     <td><?=$da['satuan']?></td>
                     <td><?="Rp " . number_format($da['harga'],2,',','.');?></td>
                     <td><?= "Rp " . number_format($rtotal,2,',','.'); ?></td>

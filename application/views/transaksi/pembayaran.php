@@ -4,7 +4,6 @@
 	$tanggalAwal = $this->db->query("SELECT MIN(DATE(date_created)) as dateMin FROM tb_transaksi")->row_array();
 	$tanggalAkhir = $this->db->query("SELECT MAX(DATE(date_created)) as dateMax FROM tb_transaksi")->row_array();
 	if ($minDate) {
-		$minDate;
 	}else {
 		$minDate  = $tanggalAwal['dateMin'];
 	}
@@ -13,7 +12,6 @@
 	}else {
 		$maxDate = $tanggalAkhir['dateMax'];
 	}
-	
 	if ($minDate<=$maxDate) {
 		$transaksi = $this->db->query("SELECT * FROM tb_transaksi WHERE date_created BETWEEN '$minDate' AND '$maxDate' ORDER BY date_created ASC")->result_array();
 		$pesan = null;
@@ -89,7 +87,7 @@ foreach ($type_rumah as $tp) {
 					<input type="hidden" name="tanggalAkhir" value="<?= $maxDate?>">
 					<button class="btn btn-sm btn-danger" ><i class="fas fa-print"></i> Cetak Laporan</button>
 				</form>
-            </div>
+            </div> 
             <div class="card-body">
                 <form action="<?= base_url('Transaksi')?>" method="post" class="mb-5">
                     <div class="row">
@@ -104,12 +102,12 @@ foreach ($type_rumah as $tp) {
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="tanggalAkhir">Akhir</label>
-                                <input type="date" name="tanggalAwal" id="tanggalAwal" class="form-control"
+                                <input type="date" name="tanggalAkhir" id="tanggalAkhir" class="form-control"
                                     value="<?= $maxDate?>" min="<?= $tanggalAwal['dateMin']?>"
                                     max="<?= $tanggalAkhir['dateMax']?>">
                             </div>
                         </div>
-                        <button type="sumbit" class="mx-3 btn btn-block btn-primary">Tampilkan</button>
+                        <button type="submit" class="mx-3 btn btn-block btn-primary">Tampilkan</button>
                     </div>
                 </form>
                 <table id="example" class="table table-striped table-bordered" style="width:100%">

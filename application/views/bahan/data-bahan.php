@@ -69,7 +69,7 @@
                     <td><?= $db['nama_bahan']?></td>
                     <td><?= $db['satuan']?></td>
                     <td><?= $db['harga']?></td>
-                    <td><?= $db['stok']?></td>
+                    <td><?= ceil($db['stok'])?></td>
                     <td>
                         <button data-toggle="modal" data-target="#modalEdit<?= $db['id_bahan']?>"
                             class="btn btn-sm btn-warning">Edit</button>

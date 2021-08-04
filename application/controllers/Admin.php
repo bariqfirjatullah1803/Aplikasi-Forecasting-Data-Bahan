@@ -39,7 +39,18 @@ class Admin extends CI_Controller {
             'status' => $this->input->post('status')
         ];
         $this->db->insert('tb_pengerjaan', $data);
-        $id_rumah = $this->input->post('rumah');
+        $spk = [
+			'nama_pemilik' => $this->input->post('pemilik'),
+			'jabatan_pemilik' => $this->input->post('jabatanpemilik'),
+			'nama_pekerja' => $this->input->post('pelaksana'),
+			'jabatan_pekerja' => $this->input->post('jabatanpelaksana'),
+			'alamat_pekerja' => $this->input->post('alamatpelaksana'),
+			'id_transaksi' => $this->input->post('id'), 
+			'date_created' => $this->input->post('date'),
+		];
+		$this->db->insert('tb_spk', $spk);
+		
+		$id_rumah = $this->input->post('rumah');
         $queryAnggaran = $this->db->query("SELECT * FROM tb_anggaran WHERE id_rumah = $id_rumah")->result_array();
         $queryBahan = $this->db->query("SELECT * FROM tb_bahan")->result_array();
         $bahan = array();
@@ -63,6 +74,9 @@ class Admin extends CI_Controller {
         $id_pengerjaan = $this->input->post('id_pengerjaan');
         $this->db->where('id_pengerjaan',$id_pengerjaan);
         $this->db->delete('tb_pengerjaan');
+        $id_spk = $this->input->post('id_spk');
+        $this->db->where('id_spk',$id_spk);
+        $this->db->delete('tb_spk');
 
         $id_rumah = $this->input->post('rumah');
         $queryAnggaran = $this->db->query("SELECT * FROM tb_anggaran WHERE id_rumah = $id_rumah")->result_array();
@@ -101,6 +115,14 @@ class Admin extends CI_Controller {
         redirect('auth');
         
     }
+	public function cetakspk($id_spk)
+	{
+		
+		$data['querySpk']=$this->db->query("SELECT * FROM tb_spk WHERE id_spk = $id_spk")->row_array();
+		$id_transaksi =  $data['querySpk']['id_transaksi'];
+		$data['queryTransaksi'] = $this->db->query("SELECT * FROM tb_transaksi INNER JOIN tb_plan ON tb_transaksi.id_plan = tb_plan.id_plan INNER JOIN tb_rumah ON tb_transaksi.id_rumah = tb_rumah.id_rumah WHERE tb_transaksi.id = $id_transaksi")->row_array();
+		$this->load->view('admin/spk',$data);
+	}
 
 }
 

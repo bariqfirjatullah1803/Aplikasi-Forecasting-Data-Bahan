@@ -27,7 +27,41 @@
     <script src="<?=base_url('assets/')?>vendor/jquery/jquery.min.js"></script>
     <script src="<?= base_url('assets/js/')?>jquery.mask.min.js"></script>
     <script src="<?= base_url('assets/js/')?>chart.js"></script>
+    <style>
+    .kop-surat {
+        text-align: center;
+        line-height: 10px;
+    }
 
+    .kop-surat img {
+        width: 100px;
+        margin-bottom: 20px;
+    }
+
+    .kop-surat b {
+        font-size: 20px;
+    }
+
+    .kop-surat h5 {
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .ttd {
+        float: right;
+        text-align: center;
+        margin-right: 20px;
+    }
+
+    .ttd .tgl {
+        margin-bottom: 100px;
+    }
+    </style>
 
 </head>
 
@@ -128,10 +162,10 @@
                     <span>Pembayaran</span>
                 </a>
             </li>
-			<hr class="sidebar-divider">
-			<div class="sidebar-heading">
-				Bantuan
-			</div>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                Bantuan
+            </div>
             <li class="nav-item <?php if ($title == 'Panduan') {echo 'active';}?>">
                 <a class="nav-link" href="<?=base_url('bantuan')?>">
                     <i class="fas fa-fw fa-info"></i>

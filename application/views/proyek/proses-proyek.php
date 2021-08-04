@@ -26,6 +26,7 @@ if ($pembeli[$now] != 0):
         $queryTransaksiById = $this->db->query("SELECT * FROM tb_transaksi INNER JOIN tb_rumah ON tb_rumah.id_rumah = tb_transaksi.id_rumah INNER JOIN tb_plan ON tb_plan.id_plan = tb_transaksi.id_plan WHERE tb_transaksi.id = $idp")->result_array();
         foreach ($queryTransaksiById as $qtbi ) :
             $queryPengerjaan = $this->db->query("SELECT * FROM tb_pengerjaan WHERE id_transaksi = $idp AND date_now = '$now'")->row_array();
+			$querySpk = $this->db->query("SELECT * FROM tb_spk WHERE id_transaksi = $idp AND date_created = '$now'")->row_array();
     ?>
     <div class="col-6">
         <div class="card">
@@ -144,7 +145,7 @@ if ($pembeli[$now] != 0):
                         <tr>
                             <td><?= $no; ?></td>
                             <td><?= $qa['nama_bahan']; ?></td>
-                            <td><?= $qa['jumlah'].' '.$qa['satuan']; ?></td>
+                            <td><?= ceil($qa['jumlah']).' '.$qa['satuan']; ?></td>
                             <td><?php 
                             if ($qa['stok'] - $qa['jumlah'] <= 0) {
                                 echo '<span class="badge badge-danger">Bahan Kurang</span>';
@@ -158,25 +159,145 @@ if ($pembeli[$now] != 0):
                     </tbody>
                 </table>
             </div>
-            <!-- <?= print_r($status)?> -->
             <?php if(empty($queryPengerjaan)):?>
-            <form action="<?= base_url('admin/pengerjaan')?>" method="post">
+            <!-- <form action="<?= base_url('admin/pengerjaan')?>" method="post">
                 <input type="hidden" name="id" value="<?= $qtbi['id']?>">
                 <input type="hidden" name="date" value="<?= $now?>">
                 <input type="hidden" name="status" value="1">
                 <input type="hidden" name="rumah" value="<?= $qtbi['id_rumah']?>">
                 <button type="submit" class="btn btn-primary btn-block"
-                    <?php if ($status != null){echo 'disabled';}?>>Kerjakan</button>
-            </form>
+                    <?php if (!empty($status)){echo 'disabled';}?>>Kerjakan</button>
+            </form> -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Kerjakan
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Detail Pengerjaan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="<?= base_url('admin/pengerjaan')?>" method="post">
+                                <input type="hidden" name="id" value="<?= $qtbi['id']?>">
+                                <input type="hidden" name="status" value="1">
+                                <input type="hidden" name="rumah" value="<?= $qtbi['id_rumah']?>">
+                                <div class="form-group">
+                                    <label for="">Pembangunan Atas Nama</label>
+                                    <input type="text" name="atasnama" class="form-control" required
+                                        value="<?= $qtbi['nama_pembeli']?>" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Nama Pemilik</label>
+                                    <input type="text" name="pemilik" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Jabatan</label>
+                                    <input type="text" name="jabatanpemilik" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Nama Pelaksana</label>
+                                    <input type="text" name="pelaksana" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Jabatan</label>
+                                    <input type="text" name="jabatanpelaksana" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Alamat Pelaksana</label>
+                                    <input type="text" name="alamatpelaksana" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Tanggal Pengerjaan</label>
+                                    <input type="date" name="date" value="<?= $now?>" class="form-control" readonly>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lanjutkan</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <?php else:?>
             <form action="<?= base_url('admin/pembatalan')?>" method="post">
                 <input type="hidden" name="id_pengerjaan" value="<?= $queryPengerjaan['id_pengerjaan']?>">
+                <input type="hidden" name="id_spk" value="<?= $querySpk['id_spk']?>">
                 <input type="hidden" name="id" value="<?= $qtbi['id']?>">
                 <input type="hidden" name="date" value="<?= $now?>">
                 <input type="hidden" name="status" value="1">
                 <input type="hidden" name="rumah" value="<?= $qtbi['id_rumah']?>">
                 <button type="submit" class="btn btn-danger btn-block">Batalkan</button>
             </form>
+            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#spk">
+                Surat Perintah Kerja
+            </button>
+            <div class="modal fade" id="spk" tabindex="-1" aria-labelledby="spk" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Surat Perintah Kerja</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="kop-surat">
+                                    <img src="<?= base_url('assets/img/')?>logopt.jpeg" alt="" srcset="">
+                                    <br><b>PT TANIYA MULTI PROPERTI</b>
+                                    <h5>JL.RAYA CURUNGREJO KEC.KEPANJEN KAB.MALANG</h5>
+                                    <h5>NO. HP 081358695449</h5>
+                                    <hr>
+                                </div>
+                                <div class="container">
+
+                                    <div class="info-surat">
+                                        <div class="title"><b><u>Surat Perintah</u></b></div>
+                                        <p>Nama : <?= $querySpk['nama_pemilik']?></p>
+                                        <p>Jabatan : <?= $querySpk['jabatan_pemilik']?></p>
+                                    </div>
+                                    <div class="isi-surat">
+                                        <div class="title"><b><u>Memerintahkan</u></b></div>
+                                        <p>Kepada,</p>
+                                        <dl>
+                                            <dd>Nama : <?= $querySpk['nama_pekerja']?></dd>
+                                            <dd>Jabatan : <?= $querySpk['jabatan_pekerja']?></dd>
+                                            <dd>Alamat : <?= $querySpk['alamat_pekerja']?></dd>
+                                            <dd>Tanggal Pelaksanaan : <?= $querySpk['date_created']?></dd>
+                                    </div>
+                                    <p>Untuk,</p>
+                                    <div class="info">
+                                        <ol>
+                                            <li>Memproses pengerjaan lahan di desa Pidek RT/RW 009/003 Pkisaji -
+                                                Kab.Malang</li>
+                                            <li>Proses pembangunan sebanyak 1 unit.</li>
+                                            <li>Pembangunan dilakukan pada blok berikut :
+                                                <ul>
+                                                    <li>Kavling <?= $qtbi['unit']?> (<?= $qtbi['nama_plan']?>) type rumah <?= $qtbi['type_rumah']?> A.n <?= $qtbi['nama_pembeli']?></li>
+                                                </ul>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="ttd">
+                                    <div class="tgl">Malang, <?= $now?></div>
+                                    <div class="nama"><?= $querySpk['nama_pemilik']?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <a target="_blank" href="<?= base_url('admin/cetakspk/').$querySpk['id_spk']?>" class="btn btn-primary"><i class="fas fa-print"></i >Cetak Surat Perintah Kerja</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php endif?>
         </div>
     </div>

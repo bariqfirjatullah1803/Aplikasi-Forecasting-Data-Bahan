@@ -45,9 +45,11 @@
                                 <tr>
                                     <td><?= $no?></td>
                                     <td><?= $bm['nama_bahan']?></td>
-                                    <td><?= $bm['stok'].' '.$bm['satuan']?></td>
+                                    <td><?= ceil($bm['stok']).$bm['satuan']?></td>
                                     <td><a title="Edit" href="" class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#exampleModal<?= $no?>"><i class="fas fa-edit"></i></a></td>
+                                            data-target="#exampleModal<?= $no?>"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-sm" href="<?= base_url('bahan/delete_stok/').$bm['id_stok']?>" onclick="return confirm('Yakin Hapus?')"><i class="fas fa-trash"></i></a>
+                                            </td>
                                 </tr>
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal<?= $no?>" tabindex="-1"
@@ -98,6 +100,7 @@
                         <tr>
                             <th>Nama Bahan</th>
                             <th>Stok</th>
+                            <th>satuan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,7 +108,8 @@
                         <tr>
 							
                             <td><?= $b['nama_bahan']?></td>
-                            <td><?= $b['stok']?></td>
+                            <td><?= ceil($b['stok']).' '.$b['satuan']?></td>
+                            <td><?= $b['satuan']?></td>
                         </tr>
                         <?php endforeach?>
                     </tbody>

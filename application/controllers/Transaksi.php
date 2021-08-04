@@ -36,13 +36,13 @@ class Transaksi extends CI_Controller
         $rumah = $this->input->post('rumah');
         $harga = $this->input->post('harga');
         $data = array();
-        $query_anggaran = $this->db->query("SELECT * FROM tb_anggaran INNER JOIN tb_bahan ON tb_anggaran.id_bahan = tb_bahan.id_bahan WHERE id_rumah = $rumah")->result_array();
-        foreach ($query_anggaran as $qa) {
-            $id_bahan = $qa['id_bahan'];
-            $qb = $this->db->query("SELECT * FROM tb_bahan WHERE id_bahan = $id_bahan")->row_array();
-            $stok[$id_bahan] = $qb['stok'] - round($qa['jumlah'] * 70);
+        // $query_anggaran = $this->db->query("SELECT * FROM tb_anggaran INNER JOIN tb_bahan ON tb_anggaran.id_bahan = tb_bahan.id_bahan WHERE id_rumah = $rumah")->result_array();
+        // foreach ($query_anggaran as $qa) {
+        //     $id_bahan = $qa['id_bahan'];
+        //     $qb = $this->db->query("SELECT * FROM tb_bahan WHERE id_bahan = $id_bahan")->row_array();
+        //     $stok[$id_bahan] = $qb['stok'] - round($qa['jumlah'] * 70);
 
-        }
+        // }
         $na = 1;
         // foreach ($stok as $s) {
         //     if ($stok[$na] < 0) {

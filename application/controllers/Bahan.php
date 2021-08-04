@@ -89,6 +89,14 @@ class Bahan extends CI_Controller {
         redirect('bahan/stok');
         
     }
+    public function delete_stok($id){
+        $this->db->where('id_stok',$id);
+        $this->db->delete('tb_stok');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil di hapus ! </div>');
+        
+        redirect('bahan/stok');
+        
+    }
     
 
 }

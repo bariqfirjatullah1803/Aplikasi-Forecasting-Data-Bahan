@@ -97,9 +97,9 @@
                 </div>
                 <div class="col-2">
                     <form action="<?= base_url('laporan/bahan')?>" target="_blank" method="post">
-					<input type="hidden" name="bahan" value="<?= $bahanById['id_bahan']?>">
-					<input type="hidden" name="date1" value="<?= $date1?>">
-					<input type="hidden" name="date2" value="<?= $date2?>">
+                        <input type="hidden" name="bahan" value="<?= $bahanById['id_bahan']?>">
+                        <input type="hidden" name="date1" value="<?= $date1?>">
+                        <input type="hidden" name="date2" value="<?= $date2?>">
                         <button type="submit" class="btn btn-sm btn-danger btn-block"><i class="fas fa-print"></i>
                             Cetak</button>
                     </form>
@@ -156,7 +156,7 @@
 							echo '<tr>';
 							echo '<td>'.$bahanById['nama_bahan'].'</td>';
 							echo '<td>'.$tt.'</td>';
-							echo '<td>'.$arrayTgl[$tt].' '.$bahanById['satuan'].'</td>';
+							echo '<td>'.ceil($arrayTgl[$tt]).' '.$bahanById['satuan'].'</td>';
 							echo '</tr>';
 						}
 						// echo $arrayTgl['2021-08-15'];
@@ -315,8 +315,8 @@
                         $arrayForecast[$fn]['hasilA'][$fp] = 'a = '.$a;
                         $arrayForecast[$fn]['b'][$fp]='b = '.$fsxy.'/'.$fsxx;
                         $arrayForecast[$fn]['hasilB'][$fp] = 'b = '.$b;
-                        $arrayForecast[$fn]['Y'][$fp] = 'Y = '.$a.' + '.$b.' x '.$x;
-                        $arrayForecast[$fn]['hasilY'][$fp] = 'Y = '.$fy;
+                        $arrayForecast[$fn]['Y'][$fp] = 'Y` = '.$a.' + '.$b.' x '.$x;
+                        $arrayForecast[$fn]['hasilY'][$fp] = 'Y` = '.$fy;
                         ?>
                         <?php if ($fy >= 0 ):?>
                         <td><?= round($fy).' '.$bh['satuan']?></td>
@@ -349,6 +349,20 @@
             aria-expanded="false" aria-controls="collapseHitung">Proses Hitung</button>
         <div class="collapse" id="collapseHitung">
             <div class="card card-body">
+                <div class="alert alert-secondary" role="alert">
+                <p><b> Keterangan </b></p>
+                        <p> Y' = a + b.X </p>
+                        <p> a =  ∑Y/N </p>
+                        <p> b = ∑XY/∑X2 </p>
+                        <p> dimana</p>
+                        <p> N = jumlah data </p>
+                        <p> X = variabel bebas </p>
+                        <p> Y' = variabel terikat </p>
+                        <p> a = nilai konstanta </p>
+                        <p> b = koefidien arah regresi </p>
+
+
+                </div>
                 <?php 
 			echo $arrayForecast[$hitung]['nama_bahan'].'<br>';
 			for ($i=0; $i < 12; $i++) {  
@@ -364,7 +378,7 @@
             </div>
         </div>
     </div>
-    <div class="card mt-3">
+    <!--  <div class="card mt-3">
         <div class="card-header">Grafik</div>
         <div class="card-body">
             <canvas id="myChart" width="400" height="100"></canvas>
@@ -397,4 +411,4 @@ var myChart = new Chart(ctx, {
     },
     options: {}
 });
-</script>
+</script> -->

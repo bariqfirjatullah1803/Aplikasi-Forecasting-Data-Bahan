@@ -48,65 +48,293 @@
     }
 ?>
 <?php endforeach?>
-<div class="row my-4">
+<!-- <div class="row my-4">
     <div class="col-12">
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseForecast"
             aria-expanded="false" aria-controls="collapseLaporan">Forecast</button>
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseLaporan"
             aria-expanded="false" aria-controls="collapseLaporan">Laporan</button>
     </div>
-</div>
-<div class="collapse show" id="collapseLaporan">
-    <?php
-		if ($date1) {
-			$date1;
-		}else {
-			$date1 = $minTanggal;
-		}
-		if ($date2) {
-			$date2;
-		}else {
-			$date2 = $maxTanggal;
-		}
-		$tanggal1 = new DateTime($minTanggal);
-		$tanggal2 = new DateTime($maxTanggal);
-		$selisih = $tanggal1->diff($tanggal2)->days;
-		// echo $selisih.'<br>';
-		for ($i=0; $i < $selisih; $i++) { 
-			$tgl = date("Y-m-d",strtotime('+'.$i.' Days',strtotime($minTanggal)));
-			$arrayTgl[$tgl] = 0;
-		}
-		// $str = strtotime('+'.$selisih->days.' Days',strtotime($minTanggal));
-		foreach ($transaksiById as $item ) {
-			$adate = strtotime($item['date_created']);
-			for ($i=0; $i < 70; $i++) { 
-				$tanggalTransaksi = date("Y-m-d",strtotime('+'.$i.' Days',$adate));
-				$total = $item['jumlah'];
-				$arrayTgl[$tanggalTransaksi] += $total;
+</div> -->
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="true">Forecast</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                    aria-controls="pills-contact" aria-selected="false">Laporan</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <form action="<?= base_url('forecast')?>" method="post">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
+                                <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
+                                    <?php foreach($tahun as $tahunaja):?>
+                                    <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>>
+                                        <?= $tahunaja?>
+                                    </option>
+                                    <?php endforeach?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="bahan" class="col-sm-2 col-form-label">Bahan</label>
+                                <select name="bahan" class="form-control col-sm-10" id="exampleFormControlSelect1">
+                                    <?php foreach($bahan as $item):?>
+                                    <option value="<?= $item['id_bahan']?>"
+                                        <?php if($bahanById['id_bahan'] == $item['id_bahan']){echo 'selected';}?>>
+                                        <?= $item['nama_bahan']?>
+                                    </option>
+                                    <?php endforeach?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" value="Hitung">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-striped forecast text-center">
+                    <thead>
+                        <tr>
+                            <th style="display: none;">#</th>
+                            <th>Index Waktu</th>
+                            <th>Total Bahan</th>
+                            <th>Kode Waktu</th>
+                            <th>Perkalian Kode waktu dan Total Bahan</th>
+                            <th>Kuadrat Kode Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+						$ib = $bahanById['id_bahan'];
+						$bt = $ft;
+						$keys = array_keys($tbb[$ib][$bt]);
+						$ck = count($keys);
+						$med = ($ck + 1) / 2;
+						$nilwal = (0 - $med) - 2.5 - 2;
+						$sigmaY[$ib] = $sigmaX[$ib] = $sigmaXY[$ib] = $sigmaXX[$ib] = 0;
+						$iw = 0; 
+						$no = 1;
+						$sy1='';
+						foreach($arrayBulan as $ab):?>
+                        <tr>
+                            <?php 
+							$y = $tbb[$ib][$bt][$no];
+							$xy = $tbb[$ib][$bt][$no] * $nilwal; 
+							$xx = $nilwal * $nilwal; 
+							?>
+                            <td style="display: none;"><?= $iw; ?></td>
+                            <td><?= $ab; ?></td>
+                            <td><?= round($y).' '.$bahanById['satuan']?></td>
+                            <td><?= $nilwal?></td>
+                            <td><?= round($xy)?></td>
+                            <td><?= $xx?></td>
+                        </tr>
+                        <?php 
+							$iw++;
+							$sigmaX[$ib] += $nilwal;
+							$nilwal+=2;
+							$no++;
+							$sigmaY[$ib] += $y;
+							$sigmaXY[$ib] += $xy;
+							$sigmaXX[$ib] += $xx;
+							$sigY = round($sigmaY[$ib]);
+							$sy1 .= "$sigY". ", ";
+							intval($sigmaX[$ib]);
+							intval  ($sigmaXY[$ib]);
+							intval($sigmaXX[$ib]);
+						endforeach;?>
+                        <tr>
+                            <td style="display: none;"><?= $iw?></td>
+                            <td>Sigma</td>
+                            <td><?= round($sigmaY[$ib])?></td>
+                            <td><?= $sigmaX[$ib]?></td>
+                            <td><?= round($sigmaXY[$ib])?></td>
+                            <td><?= $sigmaXX[$ib]?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped forecast text-center mt-5">
+                    <thead>
+                        <tr>
+                            <th style="display: none;">#</th>
+                            <th>Index Waktu</th>
+                            <th>Data Actual</th>
+                            <th>Data Forecast</th>
+                            <th>Error</th>
+                            <th>Absolute Error</th>
+                            <th>Absolute Error/Actual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+							$iw = 1; 
+							$nbh = $bahanById['id_bahan'];
+							$x = $nilwal;
+							$n =  count($periode);
+							$fp = 0;
+							$fsy = $sigmaY[$nbh];
+							$fsxy = $sigmaXY[$nbh];
+							$fsxx = $sigmaXX[$nbh];
+							$tfsy = 0;
+							$hasilforecast = 0;
+							$i = 0; 
+							$total = 0;
+							foreach($arrayBulan as $ab):?>
+                        <?php 
+								$a = $fsy/$n;
+								$b = $fsxy/$fsxx;
+								$fy = $a+$b*$x; 
+								$arrayForecast[$i]['bulan'] = $ab;
+								$arrayForecast[$i]['a'] = 'a = '.$fsy.'/'.$n;
+								$arrayForecast[$i]['hasilA'] = 'a = '.$a;
+								$arrayForecast[$i]['b']='b = '.$fsxy.'/'.$fsxx;
+								$arrayForecast[$i]['hasilB'] = 'b = '.$b;
+								$arrayForecast[$i]['Y'] = 'Y` = '.$a.' + '.$b.' x '.$x;
+								$arrayForecast[$i]['hasilY'] = 'Y` = '.$fy;
+
+							?>
+                        <tr>
+                            <td style="display: none;"><?= $iw?></td>
+                            <td><?= $ab?></td>
+                            <td><?= $at = round($tbb[$ib][$bt+1][$iw]);?></td>
+                            <td><?= $fd = round($fy)?></td>
+                            <td><?= $e = $at - $fd ?></td>
+                            <td><?= $ae = abs($at-$fd) ?></td>
+                            <?php if($at != 0):?>
+                            <td><?= abs($ae/$at)?></td>
+                            <?php else:?>
+                            <td><?= 0?></td>
+                            <?php endif?>
+                        </tr>
+                        <?php $iw++;
+							$fxy = $fy*$x;
+							$fxx = $x*$x;
+							$tfsy += $fy;
+							$x+= 2;
+							$n++;
+							$fp++;
+							$fsy += $fy;
+							$fsxy += $fxy;
+							$fsxx += $fxx;
+							if ($at != 0) {
+								$total += abs(($at - $ft)/$at);
+							}else {
+								$total += 0;
+							}
+							$hasilforecast += $ft;
+							$i++; 
+							 endforeach?>
+                        <tr style="text-align: right">
+                            <td style="display: none;"><?= $i?></td>
+                            <td colspan="5">Jumlah</td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td><?= $total?></td>
+                        </tr>
+                        <tr style="text-align: right">
+                            <td style="display: none;"><?= $i?></td>
+                            <td colspan="5">n</td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td><?= count($arrayBulan)?></td>
+                        </tr>
+                        <tr style="text-align: right">
+                            <td style="display: none;"><?= $i?></td>
+                            <td colspan="5">MAPE</td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td><?= number_format($total/count($arrayBulan),3)?> %</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseHitung"
+                    aria-expanded="false" aria-controls="collapseHitung">Proses
+                    Hitung</button>
+                <div class="collapse" id="collapseHitung">
+                    <div class="card card-body">
+                        <div class="alert alert-secondary" role="alert">
+                            <p><b> Keterangan </b></p>
+                            <p> Y' = a + b.X </p>
+                            <p> a = ∑Y/N </p>
+                            <p> b = ∑XY/∑X2 </p>
+                            <p> dimana</p>
+                            <p> N = jumlah data </p>
+                            <p> X = variabel bebas </p>
+                            <p> Y' = variabel terikat </p>
+                            <p> a = nilai konstanta </p>
+                            <p> b = koefidien arah regresi </p>
+
+
+                        </div>
+                        <?php 
+			echo $bahanById['nama_bahan'].'<br>';
+			for ($i=0; $i < 12; $i++) {  
+				echo $arrayForecast[$i]['bulan'].'<br>';
+				echo $arrayForecast[$i]['a'].'<br>';
+				echo $arrayForecast[$i]['hasilA'].'<br>';
+				echo $arrayForecast[$i]['b'].'<br>';
+				echo $arrayForecast[$i]['hasilB'].'<br>';
+				echo $arrayForecast[$i]['Y'].'<br>';
+				echo $arrayForecast[$i]['hasilY'].'<br>';
 			}
-		}
-		$d1 = new DateTime($date1);
-		$d2 = new DateTime($date2);
-		$selisih2 = $d1->diff($d2)->days;
-	?>
-    <div class="card mb-3">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-10">
-                    Laporan
-                </div>
-                <div class="col-2">
-                    <form action="<?= base_url('laporan/bahan')?>" target="_blank" method="post">
-                        <input type="hidden" name="bahan" value="<?= $bahanById['id_bahan']?>">
-                        <input type="hidden" name="date1" value="<?= $date1?>">
-                        <input type="hidden" name="date2" value="<?= $date2?>">
-                        <button type="submit" class="btn btn-sm btn-danger btn-block"><i class="fas fa-print"></i>
-                            Cetak</button>
-                    </form>
+			?>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+            <?php
+					if ($date1) {
+						$date1;
+					}else {
+						$date1 = $minTanggal;
+					}
+					if ($date2) {
+						$date2;
+					}else {
+						$date2 = $maxTanggal;
+					}
+					$tanggal1 = new DateTime($minTanggal);
+					$tanggal2 = new DateTime($maxTanggal);
+					$selisih = $tanggal1->diff($tanggal2)->days;
+					// echo $selisih.'<br>';
+					for ($i=0; $i < $selisih; $i++) { 
+						$tgl = date("Y-m-d",strtotime('+'.$i.' Days',strtotime($minTanggal)));
+						$arrayTgl[$tgl] = 0;
+					}
+					// $str = strtotime('+'.$selisih->days.' Days',strtotime($minTanggal));
+					foreach ($transaksiById as $item ) {
+						$adate = strtotime($item['date_created']);
+						for ($i=0; $i < 70; $i++) { 
+							$tanggalTransaksi = date("Y-m-d",strtotime('+'.$i.' Days',$adate));
+							$total = $item['jumlah'];
+							$arrayTgl[$tanggalTransaksi] += $total;
+						}
+					}
+					$d1 = new DateTime($date1);
+					$d2 = new DateTime($date2);
+					$selisih2 = $d1->diff($d2)->days;
+				?>
+
             <form action="<?= base_url('forecast')?>" method="post" class="mb-3">
                 <div class="row">
                     <div class="col-6">
@@ -141,6 +369,13 @@
                 </div>
                 <input type="submit" class="btn btn-primary btn-block" value="Tampilkan">
             </form>
+            <form class="mb-3" action="<?= base_url('laporan/bahan')?>" target="_blank" method="post">
+                <input type="hidden" name="bahan" value="<?= $bahanById['id_bahan']?>">
+                <input type="hidden" name="date1" value="<?= $date1?>">
+                <input type="hidden" name="date2" value="<?= $date2?>">
+                <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-print"></i>
+                    Cetak</button>
+            </form>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -151,234 +386,24 @@
                 </thead>
                 <tbody>
                     <?php
-						for ($i=0; $i < $selisih2; $i++) { 
-							$tt = date("Y-m-d",strtotime('+'.$i.' Days',strtotime($date1)));
-							echo '<tr>';
-							echo '<td>'.$bahanById['nama_bahan'].'</td>';
-							echo '<td>'.$tt.'</td>';
-							echo '<td>'.ceil($arrayTgl[$tt]).' '.$bahanById['satuan'].'</td>';
-							echo '</tr>';
-						}
-						// echo $arrayTgl['2021-08-15'];
-					?>
+							for ($i=0; $i < $selisih2; $i++) { 
+								$tt = date("Y-m-d",strtotime('+'.$i.' Days',strtotime($date1)));
+								echo '<tr>';
+								echo '<td>'.$bahanById['nama_bahan'].'</td>';
+								echo '<td>'.$tt.'</td>';
+								echo '<td>'.ceil($arrayTgl[$tt]).' '.$bahanById['satuan'].'</td>';
+								echo '</tr>';
+							}
+							// echo $arrayTgl['2021-08-15'];
+						?>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<div class="collapse show" id="collapseForecast">
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-10">
-                    <form action="<?= base_url('forecast')?>" method="post">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group row">
-                                    <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
-                                    <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
-                                        <?php foreach($tahun as $tahunaja):?>
-                                        <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>>
-                                            <?= $tahunaja?>
-                                        </option>
-                                        <?php endforeach?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="form-group">
-                                    <input class="btn btn-primary" type="submit" value="Hitung">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- Data Bahan Tahun <?= $ft?> -->
-                </div>
-                <div class="col-2">
-                    <!-- <button class="btn btn-danger btn-block" type="button" data-toggle="collapse"
-                    data-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan"><i
-                        class="fas fa-print"></i>Laporan</button> -->
-                    <!-- <form action="<?= base_url('laporan')?>" target="_blank" method="post">
-                        <input type="hidden" value="<?= $ft?>" name="tahun">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-print"></i> Cetak Laporan</button>
-                    </form> -->
-                </div>
-            </div>
-        </div>
-        <div class="card-body" style="overflow-x: scroll">
+</div>
 
-            <table class="table table-striped forecast text-center ">
-                <thead>
-                    <tr>
-                        <th scope="col" style="display:none">#</th>
-                        <th scope="col">Nama Bahan</th>
-                        <?php $arrp=''; foreach($arrayBulan as $ab):?>
-                        <th scope="col"><?= $ab?></th>
-                        <?php $arrp .= "'$ab'". ", ";  endforeach?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $sy1=''; $number = 1; foreach ($bahan as $b):?>
-                    <tr>
-                        <td style="display:none"><?= $number; ?></td>
-                        <td><?= $b['nama_bahan']?></td>
-
-                        <?php 
-                        $ib = $b['id_bahan'];
-                        $bt = $ft;
-                        $keys = array_keys($tbb[$ib][$bt]);
-                        $ck = count($keys);
-                        $med = ($ck + 1) / 2;
-                        $nilwal = (0 - $med) - 2.5 - 2;
-                        $sigmaY[$ib] = $sigmaX[$ib] = $sigmaXY[$ib] = $sigmaXX[$ib] = 0;
-                        $no = 1; 
-                        foreach($periode as $p):
-                            $y = $tbb[$ib][$bt][$no];
-                    ?>
-                        <td><?= round($y).' '.$b['satuan']?></td>
-                        <?php 
-                        $nilwal; 
-                        $xy = $tbb[$ib][$bt][$no] * $nilwal; 
-                        $xx = $nilwal * $nilwal; 
-                        $nilwal+=2;
-                        $no++;
-                        $sigmaY[$ib] += $y;
-                        $sigmaX[$ib] += $nilwal;
-                        $sigmaXY[$ib] += $xy;
-                        $sigmaXX[$ib] += $xx;
-                        endforeach;
-                    ?>
-                        <!-- <td><?= round($sigmaY[$ib]).' '.$b['satuan'] ?></td> -->
-                    </tr>
-                    <?php
-                $sigY = round($sigmaY[$ib]);
-               $sy1 .= "$sigY". ", ";
-               intval($sigmaX[$ib]);
-               intval  ($sigmaXY[$ib]);
-               intval($sigmaXX[$ib]);
-                ?>
-
-                    <?php $number++; endforeach?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="card mt-3">
-        <div class="card-header">
-            Forecast Tahun <?= $ft + 1?>
-        </div>
-        <div class="card-body" style="overflow-x: scroll">
-            <table class="table table-striped forecast">
-                <thead>
-                    <tr>
-                        <th scope="col" style="display:none">#</th>
-                        <th scope="col">Nama Bahan</th>
-                        <?php foreach($arrayBulan as $ab):?>
-                        <th scope="col"><?= $ab?></th>
-                        <?php endforeach?>
-                        <!-- <th scope="col">Jumlah Bahan</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                $fnumber = 1; 
-                $arbahan = '';
-				$fn = 0;
-                
-                $sy2 = '';
-                foreach ($bahan as $bh ) :?>
-                    <tr>
-                        <?php 
-                    $nbahan = $bh['nama_bahan'];
-                    $arbahan .= "'$nbahan'". ", ";
-                    ?>
-                        <td style="display:none"><?= $fnumber; ?></td>
-                        <td><?= $nbahan?></td>
-
-                        <?php 
-                    $nbh = $bh['id_bahan'];
-                    $x = $nilwal;
-                    $n =  count($periode);
-                    $fp = 0;
-                    $fsy = $sigmaY[$nbh];
-                    $fsxy = $sigmaXY[$nbh];
-                    $fsxx = $sigmaXX[$nbh];
-                    $tfsy = 0;
-					$arrayForecast[$fn]['nama_bahan'] = $nbahan;
-                    foreach ($arrayBulan as $ab ) {
-                        
-                        $a = $fsy/$n;
-                        $b = $fsxy/$fsxx;
-                        $fy = $a+$b*$x;
-                        $arrayForecast[$fn]['bulan'][$fp] = $ab;
-                        $arrayForecast[$fn]['a'][$fp] = 'a = '.$fsy.'/'.$n;
-                        $arrayForecast[$fn]['hasilA'][$fp] = 'a = '.$a;
-                        $arrayForecast[$fn]['b'][$fp]='b = '.$fsxy.'/'.$fsxx;
-                        $arrayForecast[$fn]['hasilB'][$fp] = 'b = '.$b;
-                        $arrayForecast[$fn]['Y'][$fp] = 'Y` = '.$a.' + '.$b.' x '.$x;
-                        $arrayForecast[$fn]['hasilY'][$fp] = 'Y` = '.$fy;
-                        ?>
-                        <?php if ($fy >= 0 ):?>
-                        <td><?= round($fy).' '.$bh['satuan']?></td>
-                        <?php else:?>
-                        <td>0<?= $bh['satuan']?></td>
-                        <?php endif?>
-                        <?php
-                        $fxy = $fy*$x;
-                        $fxx = $x*$x;
-                        $tfsy += $fy;
-                        $x+= 2;
-                        $n++;
-                        $fp++;
-                        $fsy += $fy;
-                        $fsxy += $fxy;
-                        $fsxx += $fxx;
-                       
-                        
-                    }
-                    $sigY2 = round($tfsy);
-                        $sy2 .= "$sigY2". ", ";
-                    // echo $sigY2.'<br>';
-                   ?>
-                    </tr>
-                    <?php $fn++;$fnumber++; endforeach;?>
-                </tbody>
-            </table>
-        </div>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHitung"
-            aria-expanded="false" aria-controls="collapseHitung">Proses Hitung</button>
-        <div class="collapse" id="collapseHitung">
-            <div class="card card-body">
-                <div class="alert alert-secondary" role="alert">
-                <p><b> Keterangan </b></p>
-                        <p> Y' = a + b.X </p>
-                        <p> a =  ∑Y/N </p>
-                        <p> b = ∑XY/∑X2 </p>
-                        <p> dimana</p>
-                        <p> N = jumlah data </p>
-                        <p> X = variabel bebas </p>
-                        <p> Y' = variabel terikat </p>
-                        <p> a = nilai konstanta </p>
-                        <p> b = koefidien arah regresi </p>
-
-
-                </div>
-                <?php 
-			echo $arrayForecast[$hitung]['nama_bahan'].'<br>';
-			for ($i=0; $i < 12; $i++) {  
-				echo $arrayForecast[$hitung]['bulan'][$i].'<br>';
-				echo $arrayForecast[$hitung]['a'][$i].'<br>';
-				echo $arrayForecast[$hitung]['hasilA'][$i].'<br>';
-				echo $arrayForecast[$hitung]['b'][$i].'<br>';
-				echo $arrayForecast[$hitung]['hasilB'][$i].'<br>';
-				echo $arrayForecast[$hitung]['Y'][$i].'<br>';
-				echo $arrayForecast[$hitung]['hasilY'][$i].'<br>';
-			}
-			?>
-            </div>
-        </div>
-    </div>
-    <!--  <div class="card mt-3">
+<!--  <div class="card mt-3">
         <div class="card-header">Grafik</div>
         <div class="card-body">
             <canvas id="myChart" width="400" height="100"></canvas>

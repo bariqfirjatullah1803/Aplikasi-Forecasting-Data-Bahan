@@ -46,7 +46,7 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
         <table class="table table-striped forecast text-center">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th style="display: none;">#</th>
                     <th>Index Waktu</th>
                     <th>Total Penjualan</th>
                     <th>Kode Waktu</th>
@@ -57,7 +57,7 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
             <tbody>
                 <?php foreach($arrayBulan as $ab):?>
                 <tr>
-                    <td><?= $i; ?></td>
+                    <td style="display: none;"><?= $i; ?></td>
                     <td><?= $ab; ?></td>
                     <td><?= $arrayPenjualan[$i]; ?></td>
                     <td><?= $x ?></td>
@@ -75,45 +75,65 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
 				endforeach;?>
             </tbody>
         </table>
+        <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseHitung"
+            aria-expanded="false" aria-controls="collapseHitung">Proses Hitung</button>
+        <div class="collapse" id="collapseHitung">
+            <div class="card card-body">
+                <p><b> Keterangan </b></p>
+                <p> Y' = a + b.X </p>
+                <p> a = ∑Y/N </p>
+                <p> b = ∑XY/∑X2 </p>
+                <p> dimana</p>
+                <p> N = jumlah data </p>
+                <p> X = variabel bebas </p>
+                <p> Y' = variabel terikat </p>
+                <p> a = nilai konstanta </p>
+                <p> b = koefidien arah regresi </p>
+
+                <?php
+					$j = 0;
+					foreach ($arrayBulan as $ab ) {
+						$a = $sigmaY/$n;
+						$b = $sigmaXY/$sigmaXX;
+						$dataForecast[$j] = $Y = abs($a+$b*$x);
+						// echo 'SigmaY = '.$sigmaY;
+						// echo '<br>';
+						// echo 'SigmaX = '.$sigmaX;
+						// echo '<br>';
+						// echo 'SigmaXY = '.$sigmaXY;
+						// echo '<br>';
+						// echo 'SigmaXX = '.$sigmaXX;
+						// echo '<br>';
+						// echo 'X = '.$x;
+						// echo '<br>';
+						echo $ab;
+						echo '<br>';
+						echo 'a = '.$sigmaY.'/'.$n;
+						echo '<br>';
+						echo 'a = '.$a;
+						echo '<br>';
+						echo 'b = '.$sigmaXY.'/'.$sigmaXX;
+						echo '<br>';
+						echo 'b = '.$b;
+						echo '<br>';
+						echo 'Y = '.$Y;
+						echo '<br>';
+						echo '-----------------------------';
+						echo '<br>';
+						$sigmaXX += ($x*$x);
+						$x+= $xp;
+						$i++;
+						$j++;
+						$n++;
+						$sigmaY += $Y;
+						$sigmaXY += ($Y*$x);
+					}
+					?>
+               
+            </div>
+        </div>
     </div>
 </div>
-<?php
-$j = 0;
-foreach ($arrayBulan as $ab ) {
-	$a = $sigmaY/$n;
-	$b = $sigmaXY/$sigmaXX;
-	$dataForecast[$j] = $Y = abs($a+$b*$x);
-	// echo 'SigmaY = '.$sigmaY;
-	// echo '<br>';
-	// echo 'SigmaX = '.$sigmaX;
-	// echo '<br>';
-	// echo 'SigmaXY = '.$sigmaXY;
-	// echo '<br>';
-	// echo 'SigmaXX = '.$sigmaXX;
-	// echo '<br>';
-	// echo 'X = '.$x;
-	// echo '<br>';
-	// echo 'a = '.$sigmaY.'/'.$n;
-	// echo '<br>';
-	// echo 'a = '.$a;
-	// echo '<br>';
-	// echo 'b = '.$sigmaXY.'/'.$sigmaXX;
-	// echo '<br>';
-	// echo 'b = '.$b;
-	// echo '<br>';
-	// echo 'Y = '.$Y;
-	// echo '<br>';
-	// echo '-----------------------------';
-	// echo '<br>';
-	$sigmaXX += ($x*$x);
-	$x+= $xp;
-	$i++;
-	$j++;
-	$n++;
-	$sigmaY += $Y;
-	$sigmaXY += ($Y*$x);
-}
-?>
 <div class="card">
     <div class="card-header">Forecast</div>
     <div class="card-body">
@@ -131,6 +151,7 @@ foreach ($arrayBulan as $ab ) {
             </thead>
             <tbody>
                 <?php
+                $hasilforecast = 0;
 				$i = 0; 
 				$total = 0;
 				foreach($arrayBulan as $ab):?>
@@ -144,15 +165,16 @@ foreach ($arrayBulan as $ab ) {
                     <?php if($at != 0):?>
                     <td><?= abs(($at - $ft)/$at)?></td>
                     <?php else:?>
-                    <td><?= abs(($at - $ft))?></td>
+                    <td><?= 0?></td>
                     <?php endif?>
                 </tr>
                 <?php
 				if ($at != 0) {
 					$total += abs(($at - $ft)/$at);
 				}else {
-					$total += abs(($at - $ft));
+					$total += 0;
 				}
+                $hasilforecast += $ft;
 				$i++; 
 				endforeach;?>
                 <tr style="text-align: right">
@@ -180,10 +202,18 @@ foreach ($arrayBulan as $ab ) {
                     <td style="display: none;"></td>
                     <td style="display: none;"></td>
                     <td style="display: none;"></td>
-                    <td><?= $total/count($arrayBulan)?>%</td>
+                    <td><?= number_format($total/count($arrayBulan),3)?> %</td>
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        Hasil Forecast Pada Tahun <?= $tahun+1?>
+    </div>
+    <div class="card-body">
+        Terjual <?= $hasilforecast?> unit rumah
     </div>
 </div>
 <div class="card">

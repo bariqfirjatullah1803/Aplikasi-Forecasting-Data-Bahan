@@ -180,10 +180,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
+                        <?php
 							$iw = 1; 
 							$nbh = $bahanById['id_bahan'];
-							$x = $nilwal;
+							// $x = $nilwal;
+							if ($no%2 == 0) {
+								$x = -($no-1);
+								$xp = 2;
+							}else {
+								$x = -($no/2-0.5);
+								$xp = 1;
+							}
 							$n =  count($periode);
 							$fp = 0;
 							$fsy = $sigmaY[$nbh];
@@ -193,11 +200,32 @@
 							$hasilforecast = 0;
 							$i = 0; 
 							$total = 0;
-							foreach($arrayBulan as $ab):?>
-                        <?php 
+							$a = $fsy/$n;
+							$b = $fsxy/$fsxx;
+							$fy = $a+$b*$no; 
+							foreach($arrayBulan as $ab):
+								$tbb[$ib][$bt][$no] = $fy;
+								$sigmaX = $fsy = $fsxy = $fsxx = 0;
+								if ($n%2 == 0) {
+									$x = -($n-1);
+									$xp = 2;
+								}else {
+									$x = -($n/2-0.5);
+									$xp = 1;
+								}
+
+								for ($z=1; $z <= $n; $z++) { 
+									$XY = $tbb[$ib][$bt][$z] * $x;
+									$XX = $x*$x;
+									$fsy += $tbb[$ib][$bt][$z];
+									$fsxy += $XY;
+									$sigmaX += $x;
+									$fsxx += $XX;		
+									$x+= $xp;
+								} 	
 								$a = $fsy/$n;
 								$b = $fsxy/$fsxx;
-								$fy = $a+$b*$x; 
+								$dataForecast[$j] = $fy = abs($a+$b*$x);
 								$arrayForecast[$i]['bulan'] = $ab;
 								$arrayForecast[$i]['a'] = 'a = '.$fsy.'/'.$n;
 								$arrayForecast[$i]['hasilA'] = 'a = '.$a;
@@ -205,7 +233,6 @@
 								$arrayForecast[$i]['hasilB'] = 'b = '.$b;
 								$arrayForecast[$i]['Y'] = 'Y` = '.$a.' + '.$b.' x '.$x;
 								$arrayForecast[$i]['hasilY'] = 'Y` = '.$fy;
-
 							?>
                         <tr>
                             <td style="display: none;"><?= $iw?></td>
@@ -215,28 +242,29 @@
                             <td><?= $e = $at - $fd ?></td>
                             <td><?= $ae = abs($at-$fd) ?></td>
                             <?php if($at != 0):?>
-                            <td><?= abs($ae/$at)?></td>
+                            <td><?= abs(($at - $fd)/$at)?></td>
                             <?php else:?>
                             <td><?= 0?></td>
                             <?php endif?>
                         </tr>
-                        <?php $iw++;
-							$fxy = $fy*$x;
-							$fxx = $x*$x;
-							$tfsy += $fy;
-							$x+= 2;
+                        <?php 
+							$iw++;
+							// $fxy = $fy*$x;
+							// $fxx = $x*$x;
+							// $tfsy += $fy;
 							$n++;
 							$fp++;
-							$fsy += $fy;
-							$fsxy += $fxy;
-							$fsxx += $fxx;
+							// $fsy += $fy;
+							// $fsxy += $fxy;
+							// $fsxx += $fxx;
 							if ($at != 0) {
-								$total += abs(($at - $ft)/$at);
+								$total += abs(($at - $fd)/$at);
 							}else {
 								$total += 0;
 							}
-							$hasilforecast += $ft;
+							$hasilforecast += $fd;
 							$i++; 
+							$no++;
 							 endforeach?>
                         <tr style="text-align: right">
                             <td style="display: none;"><?= $i?></td>
@@ -263,12 +291,12 @@
                             <td style="display: none;"></td>
                             <td style="display: none;"></td>
                             <td style="display: none;"></td>
-                            <td><?= number_format($total/count($arrayBulan),3)?> %</td>
+                            <td><?= number_format($total/count($arrayBulan)*100,3)?> %</td>
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseHitung"
-                    aria-expanded="false" aria-controls="collapseHitung">Proses
+                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse"
+                    data-target="#collapseHitung" aria-expanded="false" aria-controls="collapseHitung">Proses
                     Hitung</button>
                 <div class="collapse" id="collapseHitung">
                     <div class="card card-body">
@@ -301,8 +329,8 @@
                     </div>
                 </div>
             </div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-            <?php
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <?php
 					if ($date1) {
 						$date1;
 					}else {
@@ -335,57 +363,57 @@
 					$selisih2 = $d1->diff($d2)->days;
 				?>
 
-            <form action="<?= base_url('forecast')?>" method="post" class="mb-3">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group row">
-                            <label for="bahan" class="col-sm-4 col-form-label">Bahan</label>
-                            <select name="bahan" class="form-control col-sm-8" id="exampleFormControlSelect1">
-                                <?php foreach($bahan as $item):?>
-                                <option value="<?= $item['id_bahan']?>"
-                                    <?php if($bahanById['id_bahan'] == $item['id_bahan']){echo 'selected';}?>>
-                                    <?= $item['nama_bahan']?>
-                                </option>
-                                <?php endforeach?>
-                            </select>
+                <form action="<?= base_url('forecast')?>" method="post" class="mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="bahan" class="col-sm-4 col-form-label">Bahan</label>
+                                <select name="bahan" class="form-control col-sm-8" id="exampleFormControlSelect1">
+                                    <?php foreach($bahan as $item):?>
+                                    <option value="<?= $item['id_bahan']?>"
+                                        <?php if($bahanById['id_bahan'] == $item['id_bahan']){echo 'selected';}?>>
+                                        <?= $item['nama_bahan']?>
+                                    </option>
+                                    <?php endforeach?>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group row">
-                            <label for="startDate" class="col-sm-4 col-form-label">Tanggal Mulai</label>
-                            <input name="date1" type="date" class="form-control col-sm-8" min="<?= $minTanggal?>"
-                                max="<?= $maxTanggal?>" value="<?= $date1?>">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="startDate" class="col-sm-4 col-form-label">Tanggal Mulai</label>
+                                <input name="date1" type="date" class="form-control col-sm-8" min="<?= $minTanggal?>"
+                                    max="<?= $maxTanggal?>" value="<?= $date1?>">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="startDate" class="col-sm-4 col-form-label">Sampai Tanggal</label>
+                                <input name="date2" type="date" class="form-control col-sm-8" min="<?= $minTanggal?>"
+                                    max="<?= $maxTanggal?>" value="<?= $date2?>">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row">
-                            <label for="startDate" class="col-sm-4 col-form-label">Sampai Tanggal</label>
-                            <input name="date2" type="date" class="form-control col-sm-8" min="<?= $minTanggal?>"
-                                max="<?= $maxTanggal?>" value="<?= $date2?>">
-                        </div>
-                    </div>
-                </div>
-                <input type="submit" class="btn btn-primary btn-block" value="Tampilkan">
-            </form>
-            <form class="mb-3" action="<?= base_url('laporan/bahan')?>" target="_blank" method="post">
-                <input type="hidden" name="bahan" value="<?= $bahanById['id_bahan']?>">
-                <input type="hidden" name="date1" value="<?= $date1?>">
-                <input type="hidden" name="date2" value="<?= $date2?>">
-                <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-print"></i>
-                    Cetak</button>
-            </form>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nama Bahan</th>
-                        <th>Tanggal</th>
-                        <th>Jumlah</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
+                    <input type="submit" class="btn btn-primary btn-block" value="Tampilkan">
+                </form>
+                <form class="mb-3" action="<?= base_url('laporan/bahan')?>" target="_blank" method="post">
+                    <input type="hidden" name="bahan" value="<?= $bahanById['id_bahan']?>">
+                    <input type="hidden" name="date1" value="<?= $date1?>">
+                    <input type="hidden" name="date2" value="<?= $date2?>">
+                    <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-print"></i>
+                        Cetak</button>
+                </form>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nama Bahan</th>
+                            <th>Tanggal</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
 							for ($i=0; $i < $selisih2; $i++) { 
 								$tt = date("Y-m-d",strtotime('+'.$i.' Days',strtotime($date1)));
 								echo '<tr>';
@@ -396,11 +424,11 @@
 							}
 							// echo $arrayTgl['2021-08-15'];
 						?>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <!--  <div class="card mt-3">

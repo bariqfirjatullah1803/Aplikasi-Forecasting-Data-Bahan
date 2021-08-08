@@ -92,10 +92,55 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
 
                 <?php
 					$j = 0;
+					$a = $sigmaY/$n;
+					$b = $sigmaXY/$sigmaXX;
+					$dataForecast[$j] = $Y = abs($a+$b*$x);
 					foreach ($arrayBulan as $ab ) {
-						$a = $sigmaY/$n;
-						$b = $sigmaXY/$sigmaXX;
-						$dataForecast[$j] = $Y = abs($a+$b*$x);
+						$arrayPenjualan[$n] = $Y;
+						$sigmaY = $sigmaXY = $sigmaXX = 0;
+						// $sigmaXX += ($x*$x);
+						if ($n%2 == 0) {
+							$x = -($n-1);
+							$xp = 2;
+						}else {
+							$x = -($n/2-0.5);
+							$xp = 1;
+						}
+						// echo '<table class="table table-striped forecast text-center">
+						// <thead>
+						// <tr>
+						// <th>#</th>
+						// <th>Y</th>
+						// <th>X</th>
+						// <th>XY</th>
+						// <th>XX</th>
+						// </tr>
+						// </thead>
+						// <tbody>';
+						for ($z=0; $z < $n; $z++) { 
+							// echo'<tr>';
+							// echo '<td>'.$z.'</td>';
+							// echo '<td>'.$arrayPenjualan[$z].'</td>';
+							// echo '<td>'.$x.'</td>';
+							$XY = $arrayPenjualan[$z]*$x;
+							$XX = $x*$x;
+							$sigmaY += $arrayPenjualan[$z];
+							$sigmaXY += $XY;
+							// echo '<td>'.$XY.'</td>';
+							// echo '<td>'.$XX.'</td>';
+							$sigmaX += $x;
+							$sigmaXX += $XX;
+							$x+= $xp;
+							// echo '</tr>';
+						}
+						// echo '<tr>
+						// <td>'.$z.'</td>
+						// <td>'.$sigmaY.'</td>
+						// <td>'.$sigmaX.'</td>
+						// <td>'.$sigmaXY.'</td>
+						// <td>'.$sigmaXX.'</td>
+						// </tr>';
+						// echo '</tbody></table>';
 						// echo 'SigmaY = '.$sigmaY;
 						// echo '<br>';
 						// echo 'SigmaX = '.$sigmaX;
@@ -106,8 +151,8 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
 						// echo '<br>';
 						// echo 'X = '.$x;
 						// echo '<br>';
-						echo $ab;
-						echo '<br>';
+						// echo $ab;
+						// echo '<br>';
 						echo 'a = '.$sigmaY.'/'.$n;
 						echo '<br>';
 						echo 'a = '.$a;
@@ -120,13 +165,15 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
 						echo '<br>';
 						echo '-----------------------------';
 						echo '<br>';
-						$sigmaXX += ($x*$x);
-						$x+= $xp;
+						$a = $sigmaY/$n;
+						$b = $sigmaXY/$sigmaXX;
+						$dataForecast[$j] = $Y = abs($a+$b*$x);
+						echo $Y;
 						$i++;
 						$j++;
 						$n++;
-						$sigmaY += $Y;
-						$sigmaXY += ($Y*$x);
+						// $sigmaY += $Y;
+						// $sigmaXY += ($Y*$x);
 					}
 					?>
                
@@ -202,7 +249,7 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
                     <td style="display: none;"></td>
                     <td style="display: none;"></td>
                     <td style="display: none;"></td>
-                    <td><?= number_format($total/count($arrayBulan),3)?> %</td>
+                    <td><?= number_format($total/count($arrayBulan)*100,3)?> %</td>
                 </tr>
             </tbody>
         </table>

@@ -211,7 +211,7 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
                     <td><?= $at - $ft?></td>
                     <td><?= abs($at - $ft)?></td>
                     <?php if($at != 0):?>
-                    <td><?= abs(($at - $ft)/$at)?></td>
+                    <td><?= number_format(abs(($at - $ft)/$at),2)?></td>
                     <?php else:?>
                     <td><?= 0?></td>
                     <?php endif?>

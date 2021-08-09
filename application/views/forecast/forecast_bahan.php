@@ -243,7 +243,7 @@
                             <td><?= $e = $at - $fd ?></td>
                             <td><?= $ae = abs($at-$fd) ?></td>
                             <?php if($at != 0):?>
-                            <td><?= abs(($at - $fd)/$at)?></td>
+                            <td><?= number_format(abs(($at - $fd)/$at),2)?></td>
                             <?php else:?>
                             <td><?= 0?></td>
                             <?php endif?>

@@ -203,6 +203,7 @@
 							$a = $fsy/$n;
 							$b = $fsxy/$fsxx;
 							$fy = $a+$b*$no; 
+							$hfh = 0;
 							foreach($arrayBulan as $ab):
 								$tbb[$ib][$bt][$no] = $fy;
 								$sigmaX = $fsy = $fsxy = $fsxx = 0;
@@ -248,6 +249,7 @@
                             <?php endif?>
                         </tr>
                         <?php 
+						 $hfh += $fd;
 							$iw++;
 							// $fxy = $fy*$x;
 							// $fxx = $x*$x;
@@ -291,13 +293,19 @@
                             <td style="display: none;"></td>
                             <td style="display: none;"></td>
                             <td style="display: none;"></td>
-                            <td><?= number_format($total/count($arrayBulan)*100,3)?> %</td>
+                            <td><?= number_format($total/count($arrayBulan),2)?> %</td>
                         </tr>
                     </tbody>
                 </table>
                 <button class="btn btn-primary btn-block" type="button" data-toggle="collapse"
                     data-target="#collapseHitung" aria-expanded="false" aria-controls="collapseHitung">Proses
                     Hitung</button>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        Hasil forecast <?= $bahanById['nama_bahan']?> pada tahun <?= $ft+1?> <?= $hfh?>
+                        <?= $bahanById['satuan']?>
+                    </div>
+                </div>
                 <div class="collapse" id="collapseHitung">
                     <div class="card card-body">
                         <div class="alert alert-secondary" role="alert">

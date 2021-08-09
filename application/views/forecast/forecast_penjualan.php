@@ -250,7 +250,7 @@ $i = $sigmaY =$sigmaX = $sigmaXY = $sigmaXX = 0;
                     <td style="display: none;"></td>
                     <td style="display: none;"></td>
                     <td style="display: none;"></td>
-                    <td><?= number_format($total/count($arrayBulan)*100,3)?> %</td>
+                    <td><?= number_format($total/count($arrayBulan)*100,2)?> %</td>
                 </tr>
             </tbody>
         </table>

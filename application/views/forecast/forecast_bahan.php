@@ -8,7 +8,7 @@
     $maxTanggal = date("Y-m-d",strtotime("+10 Weeks",strtotime($qtahunakhir['tahunakhir'])));
 
     for ($j=1; $j <= count($bahan); $j++) { 
-        for ($t=$tahunawal; $t <= $tahunakhir; $t++) { 
+        for ($t=$tahunawal; $t <= $tahunakhir+1; $t++) { 
             $tahun[$t]=$t;
             for ($i=1; $i <= 12; $i++) { 
                 $month[$i] = 0;

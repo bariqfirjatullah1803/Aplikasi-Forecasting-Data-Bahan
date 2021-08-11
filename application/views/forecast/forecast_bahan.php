@@ -73,14 +73,17 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <form action="<?= base_url('forecast')?>" method="post">
-                    <div class="row">
+                <?php
+                    $querytahun = $this->db->query("SELECT YEAR(date_created) as tahun FROM tb_transaksi GROUP BY YEAR(date_created)")->result_array();
+                ?>    
+                <div class="row">
                         <div class="col-5">
                             <div class="form-group row">
                                 <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
                                 <select name="tahun" class="form-control col-sm-10" id="exampleFormControlSelect1">
-                                    <?php foreach($tahun as $tahunaja):?>
-                                    <option value="<?= $tahunaja?>" <?php if($ft == $tahunaja){echo "selected";}?>>
-                                        <?= $tahunaja?>
+                                    <?php foreach($querytahun as $tahunaja):?>
+                                    <option value="<?= $tahunaja['tahun']?>" <?php if($ft == $tahunaja['tahun']){echo "selected";}?>>
+                                        <?= $tahunaja['tahun']?>
                                     </option>
                                     <?php endforeach?>
                                 </select>
